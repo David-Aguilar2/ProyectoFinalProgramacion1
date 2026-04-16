@@ -12,8 +12,6 @@ namespace EL
         public string Username { get; set; }
         public string ClaveAcceso { get; set; }
 
-        public int IdCliente { get; set; }
-
         public Usuario()
         {
             // Constructor vacío
@@ -23,7 +21,6 @@ namespace EL
             Id = id;
             Username = username;
             ClaveAcceso = claveAcceso;
-            IdCliente = idCliente;
         }
     }
 }

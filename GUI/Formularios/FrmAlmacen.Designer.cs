@@ -68,7 +68,7 @@
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(130, 33);
             this.lblNombre.TabIndex = 1;
-            this.lblNombre.Text = "Nombre producto:";
+            this.lblNombre.Text = "Nombre:";
             // 
             // lblCorreo
             // 
@@ -91,7 +91,7 @@
             // lblDireccion
             // 
             this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDireccion.Location = new System.Drawing.Point(378, 65);
+            this.lblDireccion.Location = new System.Drawing.Point(429, 61);
             this.lblDireccion.Name = "lblDireccion";
             this.lblDireccion.Size = new System.Drawing.Size(93, 20);
             this.lblDireccion.TabIndex = 4;
@@ -130,10 +130,10 @@
             this.Descripcion.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Descripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Descripcion.ForeColor = System.Drawing.Color.Black;
-            this.Descripcion.Location = new System.Drawing.Point(477, 66);
+            this.Descripcion.Location = new System.Drawing.Point(432, 85);
             this.Descripcion.Multiline = true;
             this.Descripcion.Name = "Descripcion";
-            this.Descripcion.Size = new System.Drawing.Size(500, 22);
+            this.Descripcion.Size = new System.Drawing.Size(433, 96);
             this.Descripcion.TabIndex = 9;
             // 
             // btnAgregar
