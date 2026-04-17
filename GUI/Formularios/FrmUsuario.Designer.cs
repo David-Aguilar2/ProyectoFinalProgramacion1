@@ -1,6 +1,6 @@
 ﻿namespace GUI
 {
-    partial class FrmCliente
+    partial class FrmUsuario
     {
         /// <summary>
         /// Required designer variable.
@@ -119,7 +119,7 @@
             this.txtId.Location = new System.Drawing.Point(112, 15);
             this.txtId.Name = "txtId";
             this.txtId.ReadOnly = true;
-            this.txtId.Size = new System.Drawing.Size(76, 27);
+            this.txtId.Size = new System.Drawing.Size(76, 42);
             this.txtId.TabIndex = 5;
             // 
             // txtNombre
@@ -128,7 +128,7 @@
             this.txtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNombre.Location = new System.Drawing.Point(112, 61);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(196, 27);
+            this.txtNombre.Size = new System.Drawing.Size(196, 42);
             this.txtNombre.TabIndex = 6;
             // 
             // txtCorreo
@@ -137,7 +137,7 @@
             this.txtCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCorreo.Location = new System.Drawing.Point(112, 109);
             this.txtCorreo.Name = "txtCorreo";
-            this.txtCorreo.Size = new System.Drawing.Size(196, 27);
+            this.txtCorreo.Size = new System.Drawing.Size(196, 42);
             this.txtCorreo.TabIndex = 7;
             // 
             // txtTelefono
@@ -146,7 +146,7 @@
             this.txtTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTelefono.Location = new System.Drawing.Point(111, 154);
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(196, 27);
+            this.txtTelefono.Size = new System.Drawing.Size(196, 42);
             this.txtTelefono.TabIndex = 8;
             // 
             // txtDireccion
@@ -157,7 +157,7 @@
             this.txtDireccion.ForeColor = System.Drawing.Color.Black;
             this.txtDireccion.Location = new System.Drawing.Point(112, 204);
             this.txtDireccion.Name = "txtDireccion";
-            this.txtDireccion.Size = new System.Drawing.Size(500, 27);
+            this.txtDireccion.Size = new System.Drawing.Size(500, 42);
             this.txtDireccion.TabIndex = 9;
             // 
             // chkEstado
@@ -253,7 +253,7 @@
             this.txtUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUsuario.Location = new System.Drawing.Point(417, 60);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(196, 27);
+            this.txtUsuario.Size = new System.Drawing.Size(196, 42);
             this.txtUsuario.TabIndex = 17;
             this.txtUsuario.TextChanged += new System.EventHandler(this.txtUsuario_TextChanged);
             // 
@@ -272,7 +272,7 @@
             this.txtClaveAcceso.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtClaveAcceso.Location = new System.Drawing.Point(417, 108);
             this.txtClaveAcceso.Name = "txtClaveAcceso";
-            this.txtClaveAcceso.Size = new System.Drawing.Size(196, 27);
+            this.txtClaveAcceso.Size = new System.Drawing.Size(196, 42);
             this.txtClaveAcceso.TabIndex = 19;
             this.txtClaveAcceso.UseSystemPasswordChar = true;
             // 
@@ -288,9 +288,9 @@
             this.RMPrincipal.UseVisualStyleBackColor = false;
             this.RMPrincipal.Click += new System.EventHandler(this.RMPrincipal_Click);
             // 
-            // FrmCliente
+            // FrmUsuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LavenderBlush;
             this.ClientSize = new System.Drawing.Size(1238, 688);
@@ -319,9 +319,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmCliente";
+            this.Name = "FrmUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Gestión de Clientes";
+            this.Text = "Gestión de Usuarios";
             this.Load += new System.EventHandler(this.Cliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).EndInit();
             this.ResumeLayout(false);

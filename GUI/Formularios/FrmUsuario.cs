@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class FrmCliente : Form
+    public partial class FrmUsuario : Form
     {
        
 
@@ -22,7 +22,7 @@ namespace GUI
         Cliente cliente;
         DataGridViewRow filaSeleccionada;
 
-        public FrmCliente()
+        public FrmUsuario()
         {
             InitializeComponent(); 
         }

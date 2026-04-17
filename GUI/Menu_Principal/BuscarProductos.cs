@@ -32,14 +32,13 @@ namespace GUI.Menu_Principal
 
         }
 
-        private void btnClientes_Click(object sender, EventArgs e)
+        private void btnUsuarios_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FrmCliente cliente = new FrmCliente();
-            cliente.ShowDialog();
+            FrmUsuario usuario = new FrmUsuario();
+            usuario.ShowDialog();
             this.Show();
         }
-
         private void btnAlmacen_Click(object sender, EventArgs e)
         {
             this.Hide();
