@@ -20,62 +20,25 @@ namespace GUI.Autenticacion
             InitializeComponent();
 
         }
-        ClienteBL bl = new ClienteBL();
-        public static String usuarioActual;
-
-        BuscarProductos frmMenu;
 
         private void IniciarSesion_Click(object sender, EventArgs e)
         {
-            Cliente clienteLogueado = bl.Login(usuario.Text, password.Text);
-            //Validar las credenciales
-            if (clienteLogueado!=null)
+            if (usuario.Text == "admin" && password.Text == "admin")
             {
-                //Mostrar el menú principal
 
-                //Vamos a agregar el valor DialogResult.OK a la propiedad DialogResult del formulario Login
-                //this.DialogResult = DialogResult.OK;
-                //Cerrar el formulario
-                this.Hide();
-                frmMenu = new BuscarProductos();
-                frmMenu.ShowDialog();
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             else
             {
-                //Mostrar un mensaje de error
+                // Mostrar un mensaje de error si fallan las credenciales
                 MessageBox.Show("Error, usuario o contraseña incorrectos.", "Iconic Fashion | Inicio de Sesión", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                //Limpiar los txt y enfocar el txtUsuario
+                // Limpiar los campos y regresar el foco al usuario
                 usuario.Clear();
                 password.Clear();
-
                 usuario.Focus();
             }
-        }
-
-        private void Login_Load(object sender, EventArgs e)
-        {
-
-            Cliente c = new Cliente
-            {
-                Id = 1,
-                Nombre = "admin",
-                Correo = "admin",
-                Telefono = "7777-7777",
-                Direccion = "N/A",
-                Estado = true,
-                UsuarioRegistro = null,
-                FechaRegistro = DateTime.Now      ,
-                Usuario = new Usuario
-                {
-                    Id = bl.ObtenerUltimoId()+1,
-                    Username = "admin",
-                    ClaveAcceso = "admin"                   
-                }
-            };
-
-            bl.AgregarCliente(c);
-
         }
     }
 }

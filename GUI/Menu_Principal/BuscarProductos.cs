@@ -35,14 +35,14 @@ namespace GUI.Menu_Principal
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FrmUsuario usuario = new FrmUsuario();
+            ListaUsuario usuario = new ListaUsuario();
             usuario.ShowDialog();
             this.Show();
         }
         private void btnAlmacen_Click(object sender, EventArgs e)
         {
             this.Hide();
-            FrmAlmacen almacen = new FrmAlmacen();
+            ListaAlmacen almacen = new ListaAlmacen();
             almacen.ShowDialog();
             this.Show();
         }

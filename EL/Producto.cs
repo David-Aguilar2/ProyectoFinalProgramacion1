@@ -15,7 +15,6 @@ namespace EL
         public string Categoria { get; set; }
         public int Cantidad { get; set; }
 
-        public DateTime FechaRegistro { get; set; }
         public bool StockBajo()
         {
             return Cantidad <= 4;

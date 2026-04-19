@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GUI.Formularios
 {
-    public partial class FrmAlmacen : Form
+    public partial class FrmUsuarios : Form
     {
-        public FrmAlmacen()
+        public FrmUsuarios()
         {
             InitializeComponent();
         }
