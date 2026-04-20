@@ -118,7 +118,7 @@
             this.lblBuscarProducto.Location = new System.Drawing.Point(38, 189);
             this.lblBuscarProducto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBuscarProducto.Name = "lblBuscarProducto";
-            this.lblBuscarProducto.Size = new System.Drawing.Size(327, 36);
+            this.lblBuscarProducto.Size = new System.Drawing.Size(180, 19);
             this.lblBuscarProducto.TabIndex = 5;
             this.lblBuscarProducto.Text = "Buscar producto por:";
             // 
@@ -127,7 +127,7 @@
             this.textBox1.Location = new System.Drawing.Point(28, 270);
             this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(848, 42);
+            this.textBox1.Size = new System.Drawing.Size(848, 27);
             this.textBox1.TabIndex = 6;
             // 
             // lblNombre
@@ -175,7 +175,7 @@
             // 
             // BuscarProductos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 35F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1094, 671);
             this.Controls.Add(this.pictureBox1);
@@ -191,12 +191,13 @@
             this.Controls.Add(this.lblFactura);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BuscarProductos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BuscarProductos";
+            this.Text = "IconicFashion | Menú";
             this.Load += new System.EventHandler(this.BuscarProductos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

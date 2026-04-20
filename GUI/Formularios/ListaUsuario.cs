@@ -61,7 +61,7 @@ namespace GUI
 
         private void crud_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
             FrmUsuarios usuario = new FrmUsuarios();
             usuario.ShowDialog();
             this.Show();

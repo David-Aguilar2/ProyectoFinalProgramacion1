@@ -1,4 +1,5 @@
-﻿using GUI.Menu_Principal;
+﻿using GUI.Formularios;
+using GUI.Menu_Principal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,6 +48,20 @@ namespace GUI
         private void RMPrincipal_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void crud_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            FrmAlmacen usuario = new FrmAlmacen();
+            usuario.ShowDialog();
+        }
+
+        private void gCategorias_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            ListaCategoria usuario = new ListaCategoria();
+            usuario.ShowDialog();
         }
     }
 }

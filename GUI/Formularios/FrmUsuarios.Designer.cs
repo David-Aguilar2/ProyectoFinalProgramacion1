@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUsuarios));
             this.lblClaveAcceso = new System.Windows.Forms.Label();
             this.txtClaveAcceso = new System.Windows.Forms.TextBox();
             this.lblUsuario = new System.Windows.Forms.Label();
@@ -53,7 +54,7 @@
             // 
             this.lblClaveAcceso.BackColor = System.Drawing.Color.Transparent;
             this.lblClaveAcceso.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClaveAcceso.Location = new System.Drawing.Point(68, 240);
+            this.lblClaveAcceso.Location = new System.Drawing.Point(47, 240);
             this.lblClaveAcceso.Name = "lblClaveAcceso";
             this.lblClaveAcceso.Size = new System.Drawing.Size(75, 33);
             this.lblClaveAcceso.TabIndex = 37;
@@ -63,7 +64,7 @@
             // 
             this.txtClaveAcceso.BackColor = System.Drawing.Color.Snow;
             this.txtClaveAcceso.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtClaveAcceso.Location = new System.Drawing.Point(170, 239);
+            this.txtClaveAcceso.Location = new System.Drawing.Point(149, 239);
             this.txtClaveAcceso.Name = "txtClaveAcceso";
             this.txtClaveAcceso.Size = new System.Drawing.Size(238, 27);
             this.txtClaveAcceso.TabIndex = 38;
@@ -73,7 +74,7 @@
             // 
             this.lblUsuario.BackColor = System.Drawing.Color.Transparent;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(68, 192);
+            this.lblUsuario.Location = new System.Drawing.Point(47, 192);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(75, 29);
             this.lblUsuario.TabIndex = 35;
@@ -83,7 +84,7 @@
             // 
             this.txtUsuario.BackColor = System.Drawing.Color.Snow;
             this.txtUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsuario.Location = new System.Drawing.Point(170, 191);
+            this.txtUsuario.Location = new System.Drawing.Point(149, 191);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(201, 27);
             this.txtUsuario.TabIndex = 36;
@@ -92,7 +93,7 @@
             // 
             this.lblId.BackColor = System.Drawing.Color.Transparent;
             this.lblId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblId.Location = new System.Drawing.Point(68, 55);
+            this.lblId.Location = new System.Drawing.Point(47, 55);
             this.lblId.Name = "lblId";
             this.lblId.Size = new System.Drawing.Size(75, 17);
             this.lblId.TabIndex = 20;
@@ -102,7 +103,7 @@
             // 
             this.lblNombre.BackColor = System.Drawing.Color.Transparent;
             this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.Location = new System.Drawing.Point(67, 98);
+            this.lblNombre.Location = new System.Drawing.Point(46, 98);
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(93, 33);
             this.lblNombre.TabIndex = 21;
@@ -112,7 +113,7 @@
             // 
             this.lblCorreo.BackColor = System.Drawing.Color.Transparent;
             this.lblCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCorreo.Location = new System.Drawing.Point(68, 147);
+            this.lblCorreo.Location = new System.Drawing.Point(47, 147);
             this.lblCorreo.Name = "lblCorreo";
             this.lblCorreo.Size = new System.Drawing.Size(93, 33);
             this.lblCorreo.TabIndex = 22;
@@ -122,7 +123,7 @@
             // 
             this.lblTelefono.BackColor = System.Drawing.Color.Transparent;
             this.lblTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTelefono.Location = new System.Drawing.Point(67, 286);
+            this.lblTelefono.Location = new System.Drawing.Point(46, 286);
             this.lblTelefono.Name = "lblTelefono";
             this.lblTelefono.Size = new System.Drawing.Size(93, 33);
             this.lblTelefono.TabIndex = 23;
@@ -132,7 +133,7 @@
             // 
             this.lblDireccion.BackColor = System.Drawing.Color.Transparent;
             this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDireccion.Location = new System.Drawing.Point(68, 337);
+            this.lblDireccion.Location = new System.Drawing.Point(47, 337);
             this.lblDireccion.Name = "lblDireccion";
             this.lblDireccion.Size = new System.Drawing.Size(93, 39);
             this.lblDireccion.TabIndex = 24;
@@ -142,7 +143,7 @@
             // 
             this.txtId.BackColor = System.Drawing.Color.Pink;
             this.txtId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtId.Location = new System.Drawing.Point(171, 51);
+            this.txtId.Location = new System.Drawing.Point(150, 51);
             this.txtId.Name = "txtId";
             this.txtId.ReadOnly = true;
             this.txtId.Size = new System.Drawing.Size(76, 27);
@@ -152,7 +153,7 @@
             // 
             this.txtNombre.BackColor = System.Drawing.Color.Snow;
             this.txtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombre.Location = new System.Drawing.Point(171, 97);
+            this.txtNombre.Location = new System.Drawing.Point(150, 97);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(315, 27);
             this.txtNombre.TabIndex = 26;
@@ -161,7 +162,7 @@
             // 
             this.txtCorreo.BackColor = System.Drawing.Color.Snow;
             this.txtCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCorreo.Location = new System.Drawing.Point(171, 145);
+            this.txtCorreo.Location = new System.Drawing.Point(150, 145);
             this.txtCorreo.Name = "txtCorreo";
             this.txtCorreo.Size = new System.Drawing.Size(315, 27);
             this.txtCorreo.TabIndex = 27;
@@ -170,7 +171,7 @@
             // 
             this.txtTelefono.BackColor = System.Drawing.Color.Snow;
             this.txtTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTelefono.Location = new System.Drawing.Point(170, 284);
+            this.txtTelefono.Location = new System.Drawing.Point(149, 284);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(182, 27);
             this.txtTelefono.TabIndex = 28;
@@ -179,7 +180,7 @@
             // 
             this.chkEstado.BackColor = System.Drawing.Color.Transparent;
             this.chkEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkEstado.Location = new System.Drawing.Point(70, 397);
+            this.chkEstado.Location = new System.Drawing.Point(49, 397);
             this.chkEstado.Name = "chkEstado";
             this.chkEstado.Size = new System.Drawing.Size(170, 40);
             this.chkEstado.TabIndex = 30;
@@ -201,9 +202,9 @@
             // 
             this.btnActualizar.BackColor = System.Drawing.Color.Thistle;
             this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizar.Location = new System.Drawing.Point(141, 475);
+            this.btnActualizar.Location = new System.Drawing.Point(128, 475);
             this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(96, 35);
+            this.btnActualizar.Size = new System.Drawing.Size(116, 35);
             this.btnActualizar.TabIndex = 32;
             this.btnActualizar.Text = "Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = false;
@@ -236,13 +237,13 @@
             this.Descripcion.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Descripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Descripcion.ForeColor = System.Drawing.Color.Black;
-            this.Descripcion.Location = new System.Drawing.Point(170, 333);
+            this.Descripcion.Location = new System.Drawing.Point(149, 333);
             this.Descripcion.Multiline = true;
             this.Descripcion.Name = "Descripcion";
             this.Descripcion.Size = new System.Drawing.Size(316, 58);
             this.Descripcion.TabIndex = 39;
             // 
-            // CRUDusuarios
+            // FrmUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -268,11 +269,12 @@
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnBuscar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "CRUDusuarios";
+            this.Name = "FrmUsuarios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "s";
+            this.Text = "IconicFashion | CRUD Usuarios";
             this.ResumeLayout(false);
             this.PerformLayout();
 

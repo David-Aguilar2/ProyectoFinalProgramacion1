@@ -76,6 +76,12 @@
     <Compile Include="Formularios\FrmAlmacen.Designer.cs">
       <DependentUpon>FrmAlmacen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FrmCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmCategoria.Designer.cs">
+      <DependentUpon>FrmCategoria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FrmUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,12 @@
     </Compile>
     <Compile Include="Formularios\ListaAlmacen.Designer.cs">
       <DependentUpon>ListaAlmacen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\ListaCategoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\ListaCategoria.Designer.cs">
+      <DependentUpon>ListaCategoria.cs</DependentUpon>
     </Compile>
     <Compile Include="Menu_Principal\BuscarProductos.cs">
       <SubType>Form</SubType>
@@ -115,11 +127,17 @@
     <EmbeddedResource Include="Formularios\FrmAlmacen.resx">
       <DependentUpon>FrmAlmacen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmCategoria.resx">
+      <DependentUpon>FrmCategoria.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmUsuarios.resx">
       <DependentUpon>FrmUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\ListaAlmacen.resx">
       <DependentUpon>ListaAlmacen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\ListaCategoria.resx">
+      <DependentUpon>ListaCategoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu_Principal\BuscarProductos.resx">
       <DependentUpon>BuscarProductos.cs</DependentUpon>

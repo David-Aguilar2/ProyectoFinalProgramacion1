@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListaAlmacen));
             this.dgvAlmacen = new System.Windows.Forms.DataGridView();
             this.RMPrincipal = new System.Windows.Forms.Button();
             this.crud = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.gCategorias = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAlmacen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,6 +76,7 @@
             this.crud.TabIndex = 24;
             this.crud.Text = "Administrar productos";
             this.crud.UseVisualStyleBackColor = false;
+            this.crud.Click += new System.EventHandler(this.crud_Click);
             // 
             // label1
             // 
@@ -87,23 +90,37 @@
             this.label1.TabIndex = 23;
             this.label1.Text = "Lista de productos";
             // 
+            // gCategorias
+            // 
+            this.gCategorias.BackColor = System.Drawing.Color.Thistle;
+            this.gCategorias.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gCategorias.Location = new System.Drawing.Point(539, 86);
+            this.gCategorias.Name = "gCategorias";
+            this.gCategorias.Size = new System.Drawing.Size(129, 55);
+            this.gCategorias.TabIndex = 25;
+            this.gCategorias.Text = "Gestionar categorias";
+            this.gCategorias.UseVisualStyleBackColor = false;
+            this.gCategorias.Click += new System.EventHandler(this.gCategorias_Click);
+            // 
             // ListaAlmacen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LavenderBlush;
             this.ClientSize = new System.Drawing.Size(1238, 447);
+            this.Controls.Add(this.gCategorias);
             this.Controls.Add(this.crud);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RMPrincipal);
             this.Controls.Add(this.dgvAlmacen);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ListaAlmacen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Gestión del Almacen";
+            this.Text = "IconicFashion | Gestión del Almacen";
             ((System.ComponentModel.ISupportInitialize)(this.dgvAlmacen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -114,5 +131,6 @@
         private System.Windows.Forms.Button RMPrincipal;
         private System.Windows.Forms.Button crud;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button gCategorias;
     }
 }
