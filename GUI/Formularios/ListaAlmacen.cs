@@ -40,6 +40,23 @@ namespace GUI
             dgvAlmacen.AllowUserToAddRows = false;
         }
 
+        private void AbrirFormularioUnico<T>() where T : Form, new()
+        {
+            Form formularioExistente = Application.OpenForms.OfType<T>().FirstOrDefault();
+
+            if (formularioExistente != null)
+            {
+                formularioExistente.Close();
+            }
+
+            T nuevoFormulario = new T();
+
+            nuevoFormulario.FormClosed += (s, args) => this.Show();
+
+            this.Hide();
+            nuevoFormulario.Show();
+        }
+
         private void dgvAlmacen_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             
@@ -52,16 +69,12 @@ namespace GUI
 
         private void crud_Click(object sender, EventArgs e)
         {
-            this.Close();
-            FrmAlmacen usuario = new FrmAlmacen();
-            usuario.ShowDialog();
+            AbrirFormularioUnico<FrmAlmacen>();
         }
 
         private void gCategorias_Click(object sender, EventArgs e)
         {
-            this.Close();
-            ListaCategoria usuario = new ListaCategoria();
-            usuario.ShowDialog();
+            AbrirFormularioUnico<ListaCategoria>();
         }
     }
 }

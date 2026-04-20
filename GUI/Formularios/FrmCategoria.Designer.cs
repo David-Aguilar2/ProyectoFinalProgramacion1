@@ -57,7 +57,7 @@
             // 
             this.lblId.BackColor = System.Drawing.Color.Transparent;
             this.lblId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblId.Location = new System.Drawing.Point(50, 29);
+            this.lblId.Location = new System.Drawing.Point(30, 29);
             this.lblId.Name = "lblId";
             this.lblId.Size = new System.Drawing.Size(75, 17);
             this.lblId.TabIndex = 60;
@@ -67,7 +67,7 @@
             // 
             this.lblNombre.BackColor = System.Drawing.Color.Transparent;
             this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.Location = new System.Drawing.Point(49, 72);
+            this.lblNombre.Location = new System.Drawing.Point(29, 72);
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(93, 33);
             this.lblNombre.TabIndex = 61;
@@ -77,9 +77,9 @@
             // 
             this.lblDireccion.BackColor = System.Drawing.Color.Transparent;
             this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDireccion.Location = new System.Drawing.Point(50, 124);
+            this.lblDireccion.Location = new System.Drawing.Point(30, 124);
             this.lblDireccion.Name = "lblDireccion";
-            this.lblDireccion.Size = new System.Drawing.Size(93, 39);
+            this.lblDireccion.Size = new System.Drawing.Size(117, 39);
             this.lblDireccion.TabIndex = 63;
             this.lblDireccion.Text = "Descripcion:";
             // 
@@ -167,6 +167,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmCategoria";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | CRUD Categoria";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -49,6 +49,23 @@ namespace GUI
             dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsuarios.AllowUserToAddRows = false;
         }
+
+        private void AbrirFormularioUnico<T>() where T : Form, new()
+        {
+            Form formularioExistente = Application.OpenForms.OfType<T>().FirstOrDefault();
+
+            if (formularioExistente != null)
+            {
+                formularioExistente.Close();
+            }
+
+            T nuevoFormulario = new T();
+
+            nuevoFormulario.FormClosed += (s, args) => this.Show();
+
+            this.Hide();
+            nuevoFormulario.Show();
+        }
         private void dgvClientes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -61,10 +78,7 @@ namespace GUI
 
         private void crud_Click(object sender, EventArgs e)
         {
-            this.Close();
-            FrmUsuarios usuario = new FrmUsuarios();
-            usuario.ShowDialog();
-            this.Show();
+            AbrirFormularioUnico<FrmUsuarios>();
         }
     }
 }

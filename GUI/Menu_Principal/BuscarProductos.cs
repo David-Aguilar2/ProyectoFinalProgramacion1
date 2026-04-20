@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GUI.Formularios;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,23 @@ namespace GUI.Menu_Principal
         public BuscarProductos()
         {
             InitializeComponent();
+        }
+
+        private void AbrirFormularioUnico<T>() where T : Form, new()
+        {
+            Form formularioExistente = Application.OpenForms.OfType<T>().FirstOrDefault();
+
+            if (formularioExistente != null)
+            {
+                formularioExistente.Close();
+            }
+
+            T nuevoFormulario = new T();
+
+            nuevoFormulario.FormClosed += (s, args) => this.Show();
+
+            this.Hide();
+            nuevoFormulario.Show();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -34,17 +52,11 @@ namespace GUI.Menu_Principal
 
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            ListaUsuario usuario = new ListaUsuario();
-            usuario.ShowDialog();
-            this.Show();
+            AbrirFormularioUnico<ListaUsuario>();
         }
         private void btnAlmacen_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            ListaAlmacen almacen = new ListaAlmacen();
-            almacen.ShowDialog();
-            this.Show();
+            AbrirFormularioUnico<ListaAlmacen>();
         }
     }
 }
