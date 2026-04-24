@@ -21,6 +21,11 @@ namespace DAL
         // sobre cómo configurar y usar un modelo Code First, vea http://go.microsoft.com/fwlink/?LinkId=390109.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
+
+        public virtual DbSet<EL.Usuario> Usuarios { get; set; }
+        public virtual DbSet<EL.Categoria> Categorias { get; set; }
+        public virtual DbSet<EL.Producto> Productos { get; set; }
+        public virtual DbSet<EL.RegistroSalida> RegistrosSalida { get; set; }
     }
 
     //public class MyEntity

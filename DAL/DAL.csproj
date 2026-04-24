@@ -72,8 +72,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IconicFashionDbContext.cs" />
+    <Compile Include="Migrations\202604241415375_tablas_creadas.cs" />
+    <Compile Include="Migrations\202604241415375_tablas_creadas.Designer.cs">
+      <DependentUpon>202604241415375_tablas_creadas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202604241420434_cambio_nombres_tablas.cs" />
+    <Compile Include="Migrations\202604241420434_cambio_nombres_tablas.Designer.cs">
+      <DependentUpon>202604241420434_cambio_nombres_tablas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProductoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsuarioDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EL\EL.csproj">
@@ -84,6 +94,14 @@
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202604241415375_tablas_creadas.resx">
+      <DependentUpon>202604241415375_tablas_creadas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202604241420434_cambio_nombres_tablas.resx">
+      <DependentUpon>202604241420434_cambio_nombres_tablas.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

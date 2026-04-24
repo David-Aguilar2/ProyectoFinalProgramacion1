@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace EL
 {
+    [Table("Productos")]
     public class Producto
     {
         [Key]
@@ -21,7 +22,7 @@ namespace EL
         public string Descripcion { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
+        [Column(TypeName = "decimal")]
         public decimal Precio { get; set; }
 
         [Required]
