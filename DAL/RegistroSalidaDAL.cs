@@ -8,11 +8,11 @@ using System.Data.Entity;
 
 namespace DAL
 {
-    public class UsuarioDAL
+    public class RegistroSalidaDAL
     {
         IconicFashionDbContext _db;
 
-        public int Guardar(Usuario usuario, int id = 0, bool esEdicion = false)
+        public int Guardar(RegistroSalida registroSalida, int id = 0, bool esEdicion = false)
         {
             int resultado = 0;
 
@@ -20,25 +20,25 @@ namespace DAL
 
             if (esEdicion)
             {
-                usuario.IdUsuario = id;
+                registroSalida.IdRegistro = id;
 
-                _db.Entry(usuario).State = EntityState.Modified;
+                _db.Entry(registroSalida).State = EntityState.Modified;
                 _db.SaveChanges();
             }
             else
             {
-                _db.Usuarios.Add(usuario);
+                _db.RegistrosSalida.Add(registroSalida);
                 _db.SaveChanges();
             }
 
-            resultado = usuario.IdUsuario;
+            resultado = registroSalida.IdRegistro;
             return resultado;
         }
 
-        public List<Usuario> ObtenerUsuarios()
+        public List<RegistroSalida> ObtenerRegistrosSalida()
         {
             _db = new IconicFashionDbContext();
-            return _db.Usuarios.ToList();
+            return _db.RegistrosSalida.ToList();
         }
 
         public int Eliminar(int id)
@@ -46,15 +46,15 @@ namespace DAL
             int resultado = 0;
             _db = new IconicFashionDbContext();
 
-            Usuario usuario = _db.Usuarios.Find(id);
+            RegistroSalida registroSalida = _db.RegistrosSalida.Find(id);
 
-            if (usuario == null)
+            if (registroSalida == null)
                 return resultado;
 
-            _db.Usuarios.Remove(usuario);
+            _db.RegistrosSalida.Remove(registroSalida);
             _db.SaveChanges();
 
-            resultado = usuario.IdUsuario;
+            resultado = registroSalida.IdRegistro;
 
             return resultado;
         }

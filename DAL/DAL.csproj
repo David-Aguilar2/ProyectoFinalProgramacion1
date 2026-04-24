@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriaDAL.cs" />
     <Compile Include="IconicFashionDbContext.cs" />
     <Compile Include="Migrations\202604241415375_tablas_creadas.cs" />
     <Compile Include="Migrations\202604241415375_tablas_creadas.Designer.cs">
@@ -83,6 +84,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProductoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistroSalidaDAL.cs" />
     <Compile Include="UsuarioDAL.cs" />
   </ItemGroup>
   <ItemGroup>

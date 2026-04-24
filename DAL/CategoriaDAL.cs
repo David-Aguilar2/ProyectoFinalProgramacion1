@@ -8,11 +8,11 @@ using System.Data.Entity;
 
 namespace DAL
 {
-    public class UsuarioDAL
+    public class CategoriaDAL
     {
         IconicFashionDbContext _db;
 
-        public int Guardar(Usuario usuario, int id = 0, bool esEdicion = false)
+        public int Guardar(Categoria categoria, int id = 0, bool esEdicion = false)
         {
             int resultado = 0;
 
@@ -20,25 +20,25 @@ namespace DAL
 
             if (esEdicion)
             {
-                usuario.IdUsuario = id;
+                categoria.IdCategoria = id;
 
-                _db.Entry(usuario).State = EntityState.Modified;
+                _db.Entry(categoria).State = EntityState.Modified;
                 _db.SaveChanges();
             }
             else
             {
-                _db.Usuarios.Add(usuario);
+                _db.Categorias.Add(categoria);
                 _db.SaveChanges();
             }
 
-            resultado = usuario.IdUsuario;
+            resultado = categoria.IdCategoria;
             return resultado;
         }
 
-        public List<Usuario> ObtenerUsuarios()
+        public List<Categoria> ObtenerCategorias()
         {
             _db = new IconicFashionDbContext();
-            return _db.Usuarios.ToList();
+            return _db.Categorias.ToList();
         }
 
         public int Eliminar(int id)
@@ -46,15 +46,15 @@ namespace DAL
             int resultado = 0;
             _db = new IconicFashionDbContext();
 
-            Usuario usuario = _db.Usuarios.Find(id);
+            Categoria categoria = _db.Categorias.Find(id);
 
-            if (usuario == null)
+            if (categoria == null)
                 return resultado;
 
-            _db.Usuarios.Remove(usuario);
+            _db.Categorias.Remove(categoria);
             _db.SaveChanges();
 
-            resultado = usuario.IdUsuario;
+            resultado = categoria.IdCategoria;
 
             return resultado;
         }
