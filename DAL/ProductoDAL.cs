@@ -6,13 +6,12 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
     public class ProductoDAL
     {
-        public void InsertarProducto(Producto producto)
+        /*public void InsertarProducto(Producto producto)
         {
             using (var context = new IconicFashionContext())
             {
@@ -49,6 +48,6 @@ namespace DAL
                     context.SaveChanges();
                 }
             }
-        }
+        }*/
     }
 }
