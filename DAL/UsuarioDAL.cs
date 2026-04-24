@@ -12,6 +12,11 @@ namespace DAL
     {
         IconicFashionDbContext _db;
 
+        public Usuario BuscarPorId(int id)
+        {
+            _db = new IconicFashionDbContext();
+            return _db.Usuarios.Find(id);
+        }
         public int Guardar(Usuario usuario, int id = 0, bool esEdicion = false)
         {
             int resultado = 0;

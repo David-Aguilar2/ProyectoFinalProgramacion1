@@ -47,7 +47,7 @@
             this.btnActualizar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.Descripcion = new System.Windows.Forms.TextBox();
+            this.Direccion = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblClaveAcceso
@@ -197,6 +197,7 @@
             this.btnAgregar.TabIndex = 31;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = false;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnActualizar
             // 
@@ -208,6 +209,7 @@
             this.btnActualizar.TabIndex = 32;
             this.btnActualizar.Text = "Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
             // btnEliminar
             // 
@@ -219,6 +221,7 @@
             this.btnEliminar.TabIndex = 33;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnBuscar
             // 
@@ -230,18 +233,19 @@
             this.btnBuscar.TabIndex = 34;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // Descripcion
+            // Direccion
             // 
-            this.Descripcion.BackColor = System.Drawing.Color.Snow;
-            this.Descripcion.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.Descripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Descripcion.ForeColor = System.Drawing.Color.Black;
-            this.Descripcion.Location = new System.Drawing.Point(149, 333);
-            this.Descripcion.Multiline = true;
-            this.Descripcion.Name = "Descripcion";
-            this.Descripcion.Size = new System.Drawing.Size(316, 58);
-            this.Descripcion.TabIndex = 39;
+            this.Direccion.BackColor = System.Drawing.Color.Snow;
+            this.Direccion.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.Direccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Direccion.ForeColor = System.Drawing.Color.Black;
+            this.Direccion.Location = new System.Drawing.Point(149, 333);
+            this.Direccion.Multiline = true;
+            this.Direccion.Name = "Direccion";
+            this.Direccion.Size = new System.Drawing.Size(316, 58);
+            this.Direccion.TabIndex = 39;
             // 
             // FrmUsuarios
             // 
@@ -249,7 +253,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::GUI.Properties.Resources.fondo_crud;
             this.ClientSize = new System.Drawing.Size(518, 533);
-            this.Controls.Add(this.Descripcion);
+            this.Controls.Add(this.Direccion);
             this.Controls.Add(this.lblClaveAcceso);
             this.Controls.Add(this.txtClaveAcceso);
             this.Controls.Add(this.lblUsuario);
@@ -300,6 +304,6 @@
         private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.TextBox Descripcion;
+        private System.Windows.Forms.TextBox Direccion;
     }
 }
