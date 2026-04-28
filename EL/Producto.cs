@@ -22,7 +22,7 @@ namespace EL
         public string Descripcion { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal")]
+        [Column(TypeName = "decimal(10,2)")]
         public decimal Precio { get; set; }
 
         [Required]
@@ -36,6 +36,9 @@ namespace EL
 
         [Required]
         public int Cantidad { get; set; }
+
+        [Required]
+        public DateTime FechaRegistro { get; set; }
 
         public Producto()
         {
