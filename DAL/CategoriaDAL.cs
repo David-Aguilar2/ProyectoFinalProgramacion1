@@ -40,6 +40,11 @@ namespace DAL
             _db = new IconicFashionDbContext();
             return _db.Categorias.ToList();
         }
+        public Categoria ObtenerCategoria(int id)
+        {
+            _db = new IconicFashionDbContext();
+            return _db.Categorias.Find(id);
+        }
 
         public int Eliminar(int id)
         {
