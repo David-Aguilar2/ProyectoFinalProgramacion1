@@ -65,9 +65,9 @@
             // 
             this.lblClaveAcceso.BackColor = System.Drawing.Color.Transparent;
             this.lblClaveAcceso.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClaveAcceso.Location = new System.Drawing.Point(51, 263);
+            this.lblClaveAcceso.Location = new System.Drawing.Point(41, 263);
             this.lblClaveAcceso.Name = "lblClaveAcceso";
-            this.lblClaveAcceso.Size = new System.Drawing.Size(75, 33);
+            this.lblClaveAcceso.Size = new System.Drawing.Size(107, 33);
             this.lblClaveAcceso.TabIndex = 56;
             this.lblClaveAcceso.Text = "Categoría:";
             // 
@@ -75,7 +75,7 @@
             // 
             this.lblUsuario.BackColor = System.Drawing.Color.Transparent;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(51, 167);
+            this.lblUsuario.Location = new System.Drawing.Point(41, 167);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(75, 29);
             this.lblUsuario.TabIndex = 54;
@@ -94,7 +94,7 @@
             // 
             this.lblId.BackColor = System.Drawing.Color.Transparent;
             this.lblId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblId.Location = new System.Drawing.Point(51, 30);
+            this.lblId.Location = new System.Drawing.Point(41, 30);
             this.lblId.Name = "lblId";
             this.lblId.Size = new System.Drawing.Size(75, 17);
             this.lblId.TabIndex = 40;
@@ -104,7 +104,7 @@
             // 
             this.lblNombre.BackColor = System.Drawing.Color.Transparent;
             this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.Location = new System.Drawing.Point(50, 73);
+            this.lblNombre.Location = new System.Drawing.Point(40, 73);
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(93, 33);
             this.lblNombre.TabIndex = 41;
@@ -114,7 +114,7 @@
             // 
             this.lblCorreo.BackColor = System.Drawing.Color.Transparent;
             this.lblCorreo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCorreo.Location = new System.Drawing.Point(51, 122);
+            this.lblCorreo.Location = new System.Drawing.Point(41, 122);
             this.lblCorreo.Name = "lblCorreo";
             this.lblCorreo.Size = new System.Drawing.Size(93, 33);
             this.lblCorreo.TabIndex = 42;
@@ -124,9 +124,9 @@
             // 
             this.lblDireccion.BackColor = System.Drawing.Color.Transparent;
             this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDireccion.Location = new System.Drawing.Point(51, 316);
+            this.lblDireccion.Location = new System.Drawing.Point(41, 316);
             this.lblDireccion.Name = "lblDireccion";
-            this.lblDireccion.Size = new System.Drawing.Size(93, 39);
+            this.lblDireccion.Size = new System.Drawing.Size(107, 39);
             this.lblDireccion.TabIndex = 44;
             this.lblDireccion.Text = "Descripcion:";
             // 
@@ -168,17 +168,19 @@
             this.btnAgregar.TabIndex = 50;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = false;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnActualizar
             // 
             this.btnActualizar.BackColor = System.Drawing.Color.Thistle;
             this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizar.Location = new System.Drawing.Point(143, 391);
+            this.btnActualizar.Location = new System.Drawing.Point(137, 391);
             this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(102, 35);
+            this.btnActualizar.Size = new System.Drawing.Size(108, 35);
             this.btnActualizar.TabIndex = 51;
             this.btnActualizar.Text = "Actualizar";
             this.btnActualizar.UseVisualStyleBackColor = false;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
             // 
             // btnEliminar
             // 
@@ -190,6 +192,7 @@
             this.btnEliminar.TabIndex = 52;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnBuscar
             // 
@@ -201,13 +204,14 @@
             this.btnBuscar.TabIndex = 53;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = false;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // cmbCategoria
             // 
             this.cmbCategoria.FormattingEnabled = true;
             this.cmbCategoria.Location = new System.Drawing.Point(154, 263);
             this.cmbCategoria.Name = "cmbCategoria";
-            this.cmbCategoria.Size = new System.Drawing.Size(121, 24);
+            this.cmbCategoria.Size = new System.Drawing.Size(253, 24);
             this.cmbCategoria.TabIndex = 59;
             // 
             // cmbEstado
@@ -222,7 +226,7 @@
             // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(51, 217);
+            this.label1.Location = new System.Drawing.Point(41, 217);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 33);
             this.label1.TabIndex = 60;
@@ -259,6 +263,7 @@
             this.Name = "FrmAlmacen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | CRUD Almacen";
+            this.Load += new System.EventHandler(this.FrmAlmacen_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

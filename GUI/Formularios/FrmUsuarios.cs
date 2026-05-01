@@ -1,5 +1,5 @@
 ﻿using EL;
-using DAL;
+using BLL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +15,9 @@ namespace GUI.Formularios
 {
     public partial class FrmUsuarios : Form
     {
+        // Instancia global de la lógica de negocio
+        UsuarioBLL usuarioBLL = new UsuarioBLL();
+
         public FrmUsuarios()
         {
             InitializeComponent();
@@ -29,23 +32,8 @@ namespace GUI.Formularios
             txtClaveAcceso.Clear();
             txtTelefono.Clear();
             Direccion.Clear();
-
             chkEstado.Checked = true;
-
             txtNombre.Focus();
-        }
-
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtId.Text))
-            {
-                UsuarioDAL usuarioDAL = new UsuarioDAL();
-                int id = Convert.ToInt32(txtId.Text);
-
-                usuarioDAL.Eliminar(id);
-                MessageBox.Show("Usuario eliminado.");
-                LimpiarCampos();
-            }
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -61,10 +49,73 @@ namespace GUI.Formularios
                 Estado = chkEstado.Checked
             };
 
-            UsuarioDAL usuarioDAL = new UsuarioDAL();
-            int id = usuarioDAL.Guardar(nuevoUsuario);
-            MessageBox.Show("Usuario guardado con ID: " + id);
-            LimpiarCampos();
+            string resultado = usuarioBLL.InsertarUsuario(nuevoUsuario);
+
+            if (resultado == "OK")
+            {
+                MessageBox.Show("Usuario guardado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LimpiarCampos();
+            }
+            else
+            {
+                MessageBox.Show(resultado, "Error al agregar el usuario:", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtId.Text))
+            {
+                MessageBox.Show("Debe buscar un usuario primero para poder actualizar.");
+                return;
+            }
+
+            Usuario usuarioEditado = new Usuario
+            {
+                IdUsuario = Convert.ToInt32(txtId.Text),
+                Nombre = txtNombre.Text,
+                Correo = txtCorreo.Text,
+                Username = txtUsuario.Text,
+                ClaveAcceso = txtClaveAcceso.Text,
+                Telefono = txtTelefono.Text,
+                Direccion = Direccion.Text,
+                Estado = chkEstado.Checked
+            };
+
+            string resultado = usuarioBLL.ActualizarUsuario(usuarioEditado);
+
+            if (resultado == "OK")
+            {
+                MessageBox.Show("¡Datos actualizados con éxito!");
+                LimpiarCampos();
+            }
+            else
+            {
+                MessageBox.Show(resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtId.Text))
+            {
+                int id = Convert.ToInt32(txtId.Text);
+                string resultado = usuarioBLL.EliminarUsuario(id);
+
+                if (resultado == "OK")
+                {
+                    MessageBox.Show("Usuario eliminado.");
+                    LimpiarCampos();
+                }
+                else
+                {
+                    MessageBox.Show(resultado);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un usuario para eliminar.");
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -76,9 +127,8 @@ namespace GUI.Formularios
                 try
                 {
                     int id = Convert.ToInt32(idABuscar);
-                    UsuarioDAL usuarioDAL = new UsuarioDAL();
 
-                    var user = usuarioDAL.BuscarPorId(id);
+                    var user = usuarioBLL.ObtenerUsuarioPorId(id);
 
                     if (user != null)
                     {
@@ -101,28 +151,6 @@ namespace GUI.Formularios
                     MessageBox.Show("Por favor, ingrese un número de ID válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-        }
-        
-
-        private void btnActualizar_Click(object sender, EventArgs e)
-        {
-            UsuarioDAL usuarioDAL = new UsuarioDAL();
-
-            Usuario usuarioEditado = new Usuario
-            {
-                IdUsuario = Convert.ToInt32(txtId.Text),
-                Nombre = txtNombre.Text,
-                Correo = txtCorreo.Text,
-                Username = txtUsuario.Text,
-                ClaveAcceso = txtClaveAcceso.Text,
-                Telefono = txtTelefono.Text,
-                Direccion = Direccion.Text,
-                Estado = chkEstado.Checked
-            };
-
-            usuarioDAL.Guardar(usuarioEditado, usuarioEditado.IdUsuario, true);
-
-            MessageBox.Show("¡Datos actualizados con éxito!");
         }
     }
 }

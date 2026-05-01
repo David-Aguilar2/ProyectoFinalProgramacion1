@@ -12,6 +12,11 @@ namespace DAL
     {
         IconicFashionDbContext _db;
 
+        public Categoria ObtenerCategoria(int id)
+        {
+            _db = new IconicFashionDbContext();
+            return _db.Categorias.Find(id);
+        }
         public int Guardar(Categoria categoria, int id = 0, bool esEdicion = false)
         {
             int resultado = 0;
@@ -39,11 +44,6 @@ namespace DAL
         {
             _db = new IconicFashionDbContext();
             return _db.Categorias.ToList();
-        }
-        public Categoria ObtenerCategoria(int id)
-        {
-            _db = new IconicFashionDbContext();
-            return _db.Categorias.Find(id);
         }
 
         public int Eliminar(int id)

@@ -12,7 +12,13 @@ namespace BLL
     {
         public CategoriaBLL() { }
         public CategoriaDAL categoriaDAL  = new CategoriaDAL();
-        
+
+        //Buscar por ID
+        public Categoria ObtenerCategoriaPorId(int id)
+        {
+            return categoriaDAL.ObtenerCategoria(id);
+        }
+
         public string InsertarCategoria(Categoria categoria)
         {
             // Validar que la categoría no sea nula

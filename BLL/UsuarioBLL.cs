@@ -12,6 +12,13 @@ namespace BLL
     {
         UsuarioDAL dal = new UsuarioDAL();
 
+        //Buscar por ID
+        public Usuario ObtenerUsuarioPorId(int id)
+        {
+            if (id <= 0) return null;
+            return dal.BuscarPorId(id);
+        }
+
         //Insertar
         public string InsertarUsuario(Usuario usuario)
         {

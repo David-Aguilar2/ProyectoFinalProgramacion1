@@ -12,27 +12,27 @@ namespace DAL
     {
         IconicFashionDbContext _db;
 
-        public int Guardar(Producto producto, int id = 0, bool esEdicion = false)
+        public Producto ObtenerProducto(int id)
         {
-            int resultado = 0;
+            _db = new IconicFashionDbContext();
+            return _db.Productos.Find(id);
+        }
 
+        public int Guardar(Producto producto)
+        {
             _db = new IconicFashionDbContext();
 
-            if (esEdicion)
+            if (producto.IdProducto > 0)
             {
-                producto.IdProducto = id;
-
                 _db.Entry(producto).State = EntityState.Modified;
-                _db.SaveChanges();
             }
             else
             {
                 _db.Productos.Add(producto);
-                _db.SaveChanges();
             }
 
-            resultado = producto.IdProducto;
-            return resultado;
+            _db.SaveChanges();
+            return producto.IdProducto;
         }
 
         public List<Producto> ObtenerProductos()

@@ -10,7 +10,16 @@ namespace BLL
 {
     public class ProductoBLL 
     {
+        public ProductoBLL() { }
         ProductoDAL dal = new ProductoDAL();
+
+        //Buscar por ID
+        public Producto ObtenerProductoPorId(int id)
+        {
+            if (id <= 0)
+                return null;
+            return dal.ObtenerProducto(id);
+        }
 
         //Insetar  validaciones
         public string InsertarProducto(Producto producto)
@@ -28,7 +37,7 @@ namespace BLL
             if (producto.Cantidad < 0)
                 return "La cantidad no puede ser negativa";
 
-            if (producto.Categoria == null)
+            if (producto.IdCategoria <= 0)
                 return "Debe seleccionar una categoría válida";
 
             // Validar duplicados
@@ -61,7 +70,7 @@ namespace BLL
             if (producto.Cantidad < 0)
                 return "Cantidad inválida";
 
-            if (producto.Categoria == null || producto.Categoria.IdCategoria <= 0)
+            if (producto.IdCategoria <= 0)
                 return "Debe seleccionar una categoría válida";
 
             dal.Guardar(producto);

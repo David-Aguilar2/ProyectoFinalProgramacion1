@@ -12,9 +12,17 @@ namespace DAL
         // 
         // Si desea tener como destino una base de datos y/o un proveedor de base de datos diferente, 
         // modifique la cadena de conexión 'DbContext'  en el archivo de configuración de la aplicación.
-        public IconicFashionDbContext()
-            : base("name=IconicFashionDbContext")
+        public IconicFashionDbContext() : base("name=IconicFashionDbContext")
         {
+            // 1. Esto anula CUALQUIER sistema de migración (borra el error de "AutomaticMigrationsDisabled")
+            Database.SetInitializer<IconicFashionDbContext>(null);
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // 2. Esto evita que EF intente buscar la tabla __MigrationHistory
+            modelBuilder.Conventions.Remove<System.Data.Entity.Infrastructure.IncludeMetadataConvention>();
+            base.OnModelCreating(modelBuilder);
         }
 
         // Agregue un DbSet para cada tipo de entidad que desee incluir en el modelo. Para obtener más información 
