@@ -22,6 +22,9 @@ namespace BLL
         public string InsertarCategoria(Categoria categoria)
         {
             // Validar que la categoría no sea nula
+            if (categoria == null)
+                return "Error: categoría vacía";
+
             if (string.IsNullOrWhiteSpace(categoria.Nombre))
                 return "El nombre de la categoría es obligatorio";
 
@@ -67,10 +70,6 @@ namespace BLL
         public List<Categoria> ObtenerCategorias()
         {
             return categoriaDAL.ObtenerCategorias();
-        }
-        public Categoria ObtenerCategoria(int id)
-        {
-            return categoriaDAL.ObtenerCategoria(id);
         }
 
         public string EliminarCategoria(int id)

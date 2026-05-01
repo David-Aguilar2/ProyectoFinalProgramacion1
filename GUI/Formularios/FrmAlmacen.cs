@@ -74,7 +74,7 @@ namespace GUI.Formularios
                 Descripcion = Descripcion.Text,
                 Precio = txtPrecio.Value,
                 Cantidad = (int)txtStock.Value,
-                Estado = cmbEstado.SelectedItem.ToString() == "Activo",
+                Estado = cmbEstado.Text == "Activo",
                 IdCategoria = Convert.ToInt32(cmbCategoria.SelectedValue)
             };
 
@@ -106,8 +106,8 @@ namespace GUI.Formularios
                     Descripcion = Descripcion.Text,
                     Precio = txtPrecio.Value,
                     Cantidad = (int)txtStock.Value,
-                    Estado = cmbEstado.SelectedItem.ToString() == "Activo",
-                    IdCategoria = int.Parse(cmbCategoria.SelectedValue.ToString()),
+                    Estado = cmbEstado.Text == "Activo",
+                    IdCategoria = Convert.ToInt32(cmbCategoria.SelectedValue),
                     FechaRegistro = productoEncontrado.FechaRegistro
                 };
     

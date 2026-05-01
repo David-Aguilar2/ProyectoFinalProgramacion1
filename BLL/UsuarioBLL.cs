@@ -50,6 +50,11 @@ namespace BLL
                 return "El correo electrónico es obligatorio";
             }
 
+            if (string.IsNullOrWhiteSpace(usuario.Telefono) || usuario.Telefono.Length < 9)
+            {
+                return "El número de teléfono debe estar completo (Formato: 0000-0000)";
+            }
+
             // Validar duplicados
             var lista = dal.ObtenerUsuarios();
             if (lista.Any(u => u.Username.ToLower() == usuario.Username.ToLower()))
@@ -77,6 +82,11 @@ namespace BLL
 
             if (usuario.IdUsuario <= 0)
                 return "Usuario inválido";
+
+            if (string.IsNullOrWhiteSpace(usuario.Telefono) || usuario.Telefono.Length < 9)
+            {
+                return "El número de teléfono debe estar completo (Formato: 0000-0000)";
+            }
 
             dal.Guardar(usuario);
 
