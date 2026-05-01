@@ -29,12 +29,12 @@ namespace GUI.Formularios
         {
             txtId.Clear();
             txtNombre.Clear();
-            txtPrecio.Clear();
-            txtPrecio.Clear();
-            txtStock.Clear();
+            txtPrecio.Value = 0;
+            txtStock.Value = 0;
             cmbCategoria.SelectedIndex = 0;
             cmbEstado.SelectedIndex = 0;
             Descripcion.Clear();
+            productoEncontrado = null;
             txtNombre.Focus();
 
         }
@@ -72,8 +72,8 @@ namespace GUI.Formularios
             {
                 Nombre = txtNombre.Text,
                 Descripcion = Descripcion.Text,
-                Precio = decimal.Parse(txtPrecio.Text),
-                Cantidad = int.Parse(txtStock.Text),
+                Precio = txtPrecio.Value,
+                Cantidad = (int)txtStock.Value,
                 Estado = cmbEstado.SelectedItem.ToString() == "Activo",
                 IdCategoria = Convert.ToInt32(cmbCategoria.SelectedValue)
             };
@@ -104,8 +104,8 @@ namespace GUI.Formularios
                     IdProducto = Convert.ToInt32(txtId.Text),
                     Nombre = txtNombre.Text,
                     Descripcion = Descripcion.Text,
-                    Precio = decimal.Parse(txtPrecio.Text),
-                    Cantidad = int.Parse(txtStock.Text),
+                    Precio = txtPrecio.Value,
+                    Cantidad = (int)txtStock.Value,
                     Estado = cmbEstado.SelectedItem.ToString() == "Activo",
                     IdCategoria = int.Parse(cmbCategoria.SelectedValue.ToString()),
                     FechaRegistro = productoEncontrado.FechaRegistro
@@ -160,8 +160,8 @@ namespace GUI.Formularios
                         txtId.Text = productoEncontrado.IdProducto.ToString();
                         txtNombre.Text = productoEncontrado.Nombre;
                         Descripcion.Text = productoEncontrado.Descripcion;
-                        txtPrecio.Text = productoEncontrado.Precio.ToString();
-                        txtStock.Text = productoEncontrado.Cantidad.ToString();
+                        txtPrecio.Value = productoEncontrado.Precio;
+                        txtStock.Value = productoEncontrado.Cantidad;
                         cmbEstado.Text = productoEncontrado.Estado ? "Activo" : "Inactivo";
                         cmbCategoria.SelectedValue = productoEncontrado.IdCategoria;
                     }

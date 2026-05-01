@@ -32,14 +32,12 @@
             this.Descripcion = new System.Windows.Forms.TextBox();
             this.lblClaveAcceso = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
-            this.txtStock = new System.Windows.Forms.TextBox();
             this.lblId = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
             this.lblCorreo = new System.Windows.Forms.Label();
             this.lblDireccion = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
-            this.txtPrecio = new System.Windows.Forms.TextBox();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
@@ -47,6 +45,10 @@
             this.cmbCategoria = new System.Windows.Forms.ComboBox();
             this.cmbEstado = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtPrecio = new System.Windows.Forms.NumericUpDown();
+            this.txtStock = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPrecio)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtStock)).BeginInit();
             this.SuspendLayout();
             // 
             // Descripcion
@@ -80,15 +82,6 @@
             this.lblUsuario.Size = new System.Drawing.Size(75, 29);
             this.lblUsuario.TabIndex = 54;
             this.lblUsuario.Text = "En stock:";
-            // 
-            // txtStock
-            // 
-            this.txtStock.BackColor = System.Drawing.Color.Snow;
-            this.txtStock.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStock.Location = new System.Drawing.Point(153, 166);
-            this.txtStock.Name = "txtStock";
-            this.txtStock.Size = new System.Drawing.Size(201, 27);
-            this.txtStock.TabIndex = 55;
             // 
             // lblId
             // 
@@ -148,15 +141,6 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(315, 27);
             this.txtNombre.TabIndex = 46;
-            // 
-            // txtPrecio
-            // 
-            this.txtPrecio.BackColor = System.Drawing.Color.Snow;
-            this.txtPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecio.Location = new System.Drawing.Point(154, 120);
-            this.txtPrecio.Name = "txtPrecio";
-            this.txtPrecio.Size = new System.Drawing.Size(315, 27);
-            this.txtPrecio.TabIndex = 47;
             // 
             // btnAgregar
             // 
@@ -232,26 +216,46 @@
             this.label1.TabIndex = 60;
             this.label1.Text = "Estado:";
             // 
+            // txtPrecio
+            // 
+            this.txtPrecio.DecimalPlaces = 2;
+            this.txtPrecio.Location = new System.Drawing.Point(155, 122);
+            this.txtPrecio.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.txtPrecio.Name = "txtPrecio";
+            this.txtPrecio.Size = new System.Drawing.Size(120, 22);
+            this.txtPrecio.TabIndex = 62;
+            // 
+            // txtStock
+            // 
+            this.txtStock.Location = new System.Drawing.Point(154, 167);
+            this.txtStock.Name = "txtStock";
+            this.txtStock.Size = new System.Drawing.Size(120, 22);
+            this.txtStock.TabIndex = 63;
+            // 
             // FrmAlmacen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::GUI.Properties.Resources.fondo_crud;
             this.ClientSize = new System.Drawing.Size(518, 438);
+            this.Controls.Add(this.txtStock);
+            this.Controls.Add(this.txtPrecio);
             this.Controls.Add(this.cmbEstado);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbCategoria);
             this.Controls.Add(this.Descripcion);
             this.Controls.Add(this.lblClaveAcceso);
             this.Controls.Add(this.lblUsuario);
-            this.Controls.Add(this.txtStock);
             this.Controls.Add(this.lblId);
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.lblCorreo);
             this.Controls.Add(this.lblDireccion);
             this.Controls.Add(this.txtId);
             this.Controls.Add(this.txtNombre);
-            this.Controls.Add(this.txtPrecio);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btnEliminar);
@@ -264,6 +268,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | CRUD Almacen";
             this.Load += new System.EventHandler(this.FrmAlmacen_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.txtPrecio)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtStock)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,14 +280,12 @@
         private System.Windows.Forms.TextBox Descripcion;
         private System.Windows.Forms.Label lblClaveAcceso;
         private System.Windows.Forms.Label lblUsuario;
-        private System.Windows.Forms.TextBox txtStock;
         private System.Windows.Forms.Label lblId;
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.Label lblCorreo;
         private System.Windows.Forms.Label lblDireccion;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.TextBox txtNombre;
-        private System.Windows.Forms.TextBox txtPrecio;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.Button btnEliminar;
@@ -289,5 +293,7 @@
         private System.Windows.Forms.ComboBox cmbCategoria;
         private System.Windows.Forms.ComboBox cmbEstado;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown txtPrecio;
+        private System.Windows.Forms.NumericUpDown txtStock;
     }
 }

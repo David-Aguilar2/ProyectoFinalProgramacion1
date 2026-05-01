@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BLL
@@ -31,12 +32,23 @@ namespace BLL
             if (string.IsNullOrWhiteSpace(usuario.ClaveAcceso))
                 return "La contraseña es obligatoria";
 
-            if (usuario.IdUsuario <= 0)
-                return "Debe seleccionar un usuario válido";
-
             // Validar formato de usuario 
             if (usuario.Username.Length < 4)
                 return "El usuario debe tener al menos 4 caracteres";
+
+            if (!string.IsNullOrWhiteSpace(usuario.Correo))
+            {
+                // Explicación: Verifica que tenga formato texto@texto.dominio
+                string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+                if (!Regex.IsMatch(usuario.Correo, patron))
+                {
+                    return "El formato del correo electrónico no es válido";
+                }
+            }
+            else
+            {
+                return "El correo electrónico es obligatorio";
+            }
 
             // Validar duplicados
             var lista = dal.ObtenerUsuarios();
@@ -66,7 +78,7 @@ namespace BLL
             if (usuario.IdUsuario <= 0)
                 return "Usuario inválido";
 
-            dal.Guardar(usuario, usuario.IdUsuario, true);
+            dal.Guardar(usuario);
 
             return "OK";
         }

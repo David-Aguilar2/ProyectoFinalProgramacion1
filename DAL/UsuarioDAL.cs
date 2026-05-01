@@ -17,27 +17,21 @@ namespace DAL
             _db = new IconicFashionDbContext();
             return _db.Usuarios.Find(id);
         }
-        public int Guardar(Usuario usuario, int id = 0, bool esEdicion = false)
+        public int Guardar(Usuario usuario)
         {
-            int resultado = 0;
-
             _db = new IconicFashionDbContext();
 
-            if (esEdicion)
+            if (usuario.IdUsuario > 0)
             {
-                usuario.IdUsuario = id;
-
                 _db.Entry(usuario).State = EntityState.Modified;
-                _db.SaveChanges();
             }
             else
             {
                 _db.Usuarios.Add(usuario);
-                _db.SaveChanges();
             }
 
-            resultado = usuario.IdUsuario;
-            return resultado;
+            _db.SaveChanges();
+            return usuario.IdUsuario;
         }
 
         public List<Usuario> ObtenerUsuarios()

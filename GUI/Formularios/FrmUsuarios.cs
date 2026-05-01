@@ -30,7 +30,7 @@ namespace GUI.Formularios
             txtCorreo.Clear();
             txtUsuario.Clear();
             txtClaveAcceso.Clear();
-            txtTelefono.Clear();
+            txtTelefono.Text = "";
             Direccion.Clear();
             chkEstado.Checked = true;
             txtNombre.Focus();
@@ -38,6 +38,13 @@ namespace GUI.Formularios
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            if (!txtTelefono.MaskCompleted)
+            {
+                MessageBox.Show("Por favor, ingrese un número de teléfono completo (0000-0000).",
+                                "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Usuario nuevoUsuario = new Usuario
             {
                 Nombre = txtNombre.Text,
@@ -67,6 +74,13 @@ namespace GUI.Formularios
             if (string.IsNullOrEmpty(txtId.Text))
             {
                 MessageBox.Show("Debe buscar un usuario primero para poder actualizar.");
+                return;
+            }
+
+            if (!txtTelefono.MaskCompleted)
+            {
+                MessageBox.Show("Por favor, ingrese un número de teléfono completo (0000-0000).",
+                                "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

@@ -41,13 +41,13 @@
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.txtCorreo = new System.Windows.Forms.TextBox();
-            this.txtTelefono = new System.Windows.Forms.TextBox();
             this.chkEstado = new System.Windows.Forms.CheckBox();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.Direccion = new System.Windows.Forms.TextBox();
+            this.txtTelefono = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // lblClaveAcceso
@@ -167,15 +167,6 @@
             this.txtCorreo.Size = new System.Drawing.Size(315, 27);
             this.txtCorreo.TabIndex = 27;
             // 
-            // txtTelefono
-            // 
-            this.txtTelefono.BackColor = System.Drawing.Color.Snow;
-            this.txtTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTelefono.Location = new System.Drawing.Point(149, 284);
-            this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(182, 27);
-            this.txtTelefono.TabIndex = 28;
-            // 
             // chkEstado
             // 
             this.chkEstado.BackColor = System.Drawing.Color.Transparent;
@@ -247,12 +238,22 @@
             this.Direccion.Size = new System.Drawing.Size(316, 58);
             this.Direccion.TabIndex = 39;
             // 
+            // txtTelefono
+            // 
+            this.txtTelefono.BeepOnError = true;
+            this.txtTelefono.Location = new System.Drawing.Point(149, 286);
+            this.txtTelefono.Mask = "0000-0000";
+            this.txtTelefono.Name = "txtTelefono";
+            this.txtTelefono.Size = new System.Drawing.Size(134, 22);
+            this.txtTelefono.TabIndex = 40;
+            // 
             // FrmUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::GUI.Properties.Resources.fondo_crud;
             this.ClientSize = new System.Drawing.Size(518, 533);
+            this.Controls.Add(this.txtTelefono);
             this.Controls.Add(this.Direccion);
             this.Controls.Add(this.lblClaveAcceso);
             this.Controls.Add(this.txtClaveAcceso);
@@ -266,7 +267,6 @@
             this.Controls.Add(this.txtId);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.txtCorreo);
-            this.Controls.Add(this.txtTelefono);
             this.Controls.Add(this.chkEstado);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.btnActualizar);
@@ -298,12 +298,12 @@
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtCorreo;
-        private System.Windows.Forms.TextBox txtTelefono;
         private System.Windows.Forms.CheckBox chkEstado;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox Direccion;
+        private System.Windows.Forms.MaskedTextBox txtTelefono;
     }
 }
