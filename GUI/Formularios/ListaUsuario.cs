@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using EL;
 using GUI.Autenticacion;
 using GUI.Formularios;
@@ -17,6 +18,7 @@ namespace GUI
 {
     public partial class ListaUsuario : Form
     {
+        UsuarioBLL usuarioBLL = new UsuarioBLL();
 
         public ListaUsuario()
         {
@@ -41,9 +43,11 @@ namespace GUI
             dgvUsuarios.Columns.Add("Estado", "Estado");
             dgvUsuarios.Columns.Add("Usuario", "Usuario");
 
-            dgvUsuarios.Rows.Add("1", "Ana Martínez", "ana@iconic.com", "7788-9900", "San Salvador", "Activo", "amartinez");
-            dgvUsuarios.Rows.Add("2", "Carlos Pérez", "carlos@iconic.com", "2244-5566", "Santa Ana", "Activo", "cperez");
-            dgvUsuarios.Rows.Add("3", "Elena Gómez", "elena@iconic.com", "7111-2233", "San Miguel", "Inactivo", "egomez");
+            usuarioBLL.ObtenerUsuarios().ForEach(u =>
+            {
+                string estado = u.Estado ? "Activo" : "Inactivo";
+                dgvUsuarios.Rows.Add(u.IdUsuario, u.Nombre, u.Correo, u.Telefono, u.Direccion, estado, u.Username);
+            });
 
             dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

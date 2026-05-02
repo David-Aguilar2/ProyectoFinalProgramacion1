@@ -88,5 +88,10 @@ namespace BLL
 
             return "OK";
         }
+
+        public List<Producto> ObtenerProductos()
+        {
+            return dal.ObtenerProductos();
+        }
     }
 }

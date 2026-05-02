@@ -66,7 +66,6 @@ namespace BLL
             return "OK";
         }
 
-
         public List<Categoria> ObtenerCategorias()
         {
             return categoriaDAL.ObtenerCategorias();

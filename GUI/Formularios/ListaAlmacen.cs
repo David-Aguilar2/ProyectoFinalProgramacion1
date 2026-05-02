@@ -1,4 +1,6 @@
-﻿using GUI.Formularios;
+﻿using BLL;
+using DAL;
+using GUI.Formularios;
 using GUI.Menu_Principal;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,8 @@ namespace GUI
 {
     public partial class ListaAlmacen : Form
     {
+        ProductoBLL productoBLL = new ProductoBLL();
+        CategoriaBLL categoriaBLL = new CategoriaBLL();
 
         public ListaAlmacen()
         {
@@ -31,9 +35,15 @@ namespace GUI
             dgvAlmacen.Columns.Add("Categoria", "Categoría");
             dgvAlmacen.Columns.Add("Descripcion", "Descripción");
 
-            dgvAlmacen.Rows.Add("1", "Camisa Oxford Slim", "25.99", "15", "Camisas", "Camisa de algodón premium color azul");
-            dgvAlmacen.Rows.Add("2", "Pantalón Chino Beige", "35.50", "8", "Pantalones", "Corte recto, ideal para oficina");
-            dgvAlmacen.Rows.Add("3", "Vestido Gala Noche", "85.00", "3", "Vestidos", "Vestido largo fucsia con detalles en seda");
+            var listaCategorias = categoriaBLL.ObtenerCategorias();
+
+            productoBLL.ObtenerProductos().ForEach(p =>
+            {
+                var categoria = listaCategorias.FirstOrDefault(c => c.IdCategoria == p.IdCategoria);
+                string nombreCategoria = (categoria != null) ? categoria.Nombre : "Sin Categoría";
+
+                dgvAlmacen.Rows.Add(p.IdProducto, p.Nombre, p.Precio, p.Cantidad, nombreCategoria, p.Descripcion);
+            });
 
             dgvAlmacen.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAlmacen.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

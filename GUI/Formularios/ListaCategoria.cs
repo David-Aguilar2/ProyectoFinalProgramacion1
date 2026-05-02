@@ -1,4 +1,5 @@
 ﻿using GUI.Menu_Principal;
+using BLL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ namespace GUI.Formularios
 {
     public partial class ListaCategoria : Form
     {
+        CategoriaBLL categoriaBLL = new CategoriaBLL();
         public ListaCategoria()
         {
             InitializeComponent();
@@ -28,9 +30,10 @@ namespace GUI.Formularios
             dgvCategorias.Columns.Add("Nombre", "Nombre");
             dgvCategorias.Columns.Add("Descripcion", "Descripción");
 
-            dgvCategorias.Rows.Add("1", "Camisas", "Prendas superiores formales y casuales");
-            dgvCategorias.Rows.Add("2", "Pantalones", "Cortes chino, slim y denim para toda ocasión");
-            dgvCategorias.Rows.Add("3", "Vestidos", "Colección de gala, noche y vestidos de verano");
+            categoriaBLL.ObtenerCategorias().ForEach(c =>
+            {
+                dgvCategorias.Rows.Add(c.IdCategoria, c.Nombre, c.Descripcion);
+            });
 
             dgvCategorias.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCategorias.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
