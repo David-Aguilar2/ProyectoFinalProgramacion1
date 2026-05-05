@@ -12,6 +12,8 @@ namespace DAL
         // 
         // Si desea tener como destino una base de datos y/o un proveedor de base de datos diferente, 
         // modifique la cadena de conexión 'DbContext'  en el archivo de configuración de la aplicación.
+
+        //public IconicFashionDbContext() : base("name=IconicFashionDbContextBetsa")
         public IconicFashionDbContext() : base("name=IconicFashionDbContext")
         {
             // 1. Esto anula CUALQUIER sistema de migración (borra el error de "AutomaticMigrationsDisabled")

@@ -13,6 +13,12 @@ namespace GUI.Menu_Principal
 {
     public partial class BuscarProductos : Form
     {
+        //private Panel panelMenu;
+        //private Panel panelDashboard;
+        //private DataGridView dgvProductos;
+        //private TextBox txtBuscar;
+        //private Button btnVenta, btnAlmacen, btnUsuarios, btnNuevaVenta;
+
         public BuscarProductos()
         {
             InitializeComponent();
@@ -52,6 +58,36 @@ namespace GUI.Menu_Principal
         private void btnAlmacen_Click(object sender, EventArgs e)
         {
             AbrirFormularioUnico<ListaAlmacen>();
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gbxResumen_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnFiltrar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
