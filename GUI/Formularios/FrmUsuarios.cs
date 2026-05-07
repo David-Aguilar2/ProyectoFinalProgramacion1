@@ -1,5 +1,7 @@
-﻿using EL;
-using BLL;
+﻿using BLL;
+using DAL;
+using EL;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic;
 
 namespace GUI.Formularios
 {
@@ -18,62 +19,46 @@ namespace GUI.Formularios
         // Instancia global de la lógica de negocio
         UsuarioBLL usuarioBLL = new UsuarioBLL();
 
-        public FrmUsuarios()
+        private Usuario _usuarioEdicion;
+
+        public FrmUsuarios(Usuario usuario = null)
         {
             InitializeComponent();
+            _usuarioEdicion = usuario;
         }
 
-        private void LimpiarCampos()
+        private void FrmUsuarios_Load(object sender, EventArgs e)
         {
-            txtId.Clear();
-            txtNombre.Clear();
-            txtCorreo.Clear();
-            txtUsuario.Clear();
-            txtClaveAcceso.Clear();
-            txtTelefono.Text = "";
-            Direccion.Clear();
-            chkEstado.Checked = true;
-            txtNombre.Focus();
-        }
-
-        private void btnAgregar_Click(object sender, EventArgs e)
-        {
-
-            Usuario nuevoUsuario = new Usuario
+            if (_usuarioEdicion != null)
             {
-                Nombre = txtNombre.Text,
-                Correo = txtCorreo.Text,
-                Username = txtUsuario.Text,
-                ClaveAcceso = txtClaveAcceso.Text,
-                Telefono = txtTelefono.Text,
-                Direccion = Direccion.Text,
-                Estado = chkEstado.Checked
-            };
-
-            string resultado = usuarioBLL.InsertarUsuario(nuevoUsuario);
-
-            if (resultado == "OK")
-            {
-                MessageBox.Show("Usuario guardado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarCampos();
+                lblTitulo.Text = "Editar Usuario";
+                txtId.Text = _usuarioEdicion.IdUsuario.ToString();
+                txtNombre.Text = _usuarioEdicion.Nombre;
+                txtCorreo.Text = _usuarioEdicion.Correo;
+                txtUsuario.Text = _usuarioEdicion.Username;
+                txtClaveAcceso.Text = _usuarioEdicion.ClaveAcceso;
+                txtTelefono.Text = _usuarioEdicion.Telefono;
+                Direccion.Text = _usuarioEdicion.Direccion;
+                chkEstado.Checked = _usuarioEdicion.Estado;
+                btnAceptar.Text = "Actualizar";
             }
             else
             {
-                MessageBox.Show(resultado, "Error al agregar el usuario:", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                lblTitulo.Text = "Nuevo Usuario";
+                btnAceptar.Text = "Guardar";
             }
         }
 
-        private void btnActualizar_Click(object sender, EventArgs e)
+        private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtId.Text))
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                MessageBox.Show("Debe buscar un usuario primero para poder actualizar.");
+                MessageBox.Show("El nombre es obligatorio.");
                 return;
             }
 
-            Usuario usuarioEditado = new Usuario
+            Usuario u = new Usuario
             {
-                IdUsuario = Convert.ToInt32(txtId.Text),
                 Nombre = txtNombre.Text,
                 Correo = txtCorreo.Text,
                 Username = txtUsuario.Text,
@@ -83,75 +68,28 @@ namespace GUI.Formularios
                 Estado = chkEstado.Checked
             };
 
-            string resultado = usuarioBLL.ActualizarUsuario(usuarioEditado);
+            string resultado;
+
+            if (_usuarioEdicion != null)
+            {
+                u.IdUsuario = _usuarioEdicion.IdUsuario;
+                resultado = usuarioBLL.ActualizarUsuario(u);
+            }
+            else
+            {
+                resultado = usuarioBLL.InsertarUsuario(u);
+            }
 
             if (resultado == "OK")
             {
-                MessageBox.Show("¡Datos actualizados con éxito!");
-                LimpiarCampos();
+                MessageBox.Show("Operación realizada con éxito", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
             else
             {
-                MessageBox.Show(resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtId.Text))
-            {
-                int id = Convert.ToInt32(txtId.Text);
-                string resultado = usuarioBLL.EliminarUsuario(id);
-
-                if (resultado == "OK")
-                {
-                    MessageBox.Show("Usuario eliminado.");
-                    LimpiarCampos();
-                }
-                else
-                {
-                    MessageBox.Show(resultado);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Seleccione un usuario para eliminar.");
-            }
-        }
-
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-            string idABuscar = Interaction.InputBox("Ingrese el ID del usuario que desea buscar:", "Buscar Usuario", "");
-
-            if (!string.IsNullOrEmpty(idABuscar))
-            {
-                try
-                {
-                    int id = Convert.ToInt32(idABuscar);
-
-                    var user = usuarioBLL.ObtenerUsuarioPorId(id);
-
-                    if (user != null)
-                    {
-                        txtId.Text = user.IdUsuario.ToString();
-                        txtNombre.Text = user.Nombre;
-                        txtCorreo.Text = user.Correo;
-                        txtUsuario.Text = user.Username;
-                        txtClaveAcceso.Text = user.ClaveAcceso;
-                        txtTelefono.Text = user.Telefono;
-                        Direccion.Text = user.Direccion;
-                        chkEstado.Checked = user.Estado;
-                    }
-                    else
-                    {
-                        MessageBox.Show("No se encontró ningún usuario con el ID: " + id, "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Por favor, ingrese un número de ID válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-        }
     }
 }

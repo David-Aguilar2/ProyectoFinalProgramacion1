@@ -32,7 +32,9 @@
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
             this.RMPrincipal = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.crud = new System.Windows.Forms.Button();
+            this.agregar = new System.Windows.Forms.Button();
+            this.txtBuscarId = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,14 +46,14 @@
             this.dgvUsuarios.BackgroundColor = System.Drawing.Color.Orchid;
             this.dgvUsuarios.ColumnHeadersHeight = 29;
             this.dgvUsuarios.GridColor = System.Drawing.Color.DarkMagenta;
-            this.dgvUsuarios.Location = new System.Drawing.Point(28, 157);
+            this.dgvUsuarios.Location = new System.Drawing.Point(28, 213);
             this.dgvUsuarios.Name = "dgvUsuarios";
             this.dgvUsuarios.ReadOnly = true;
             this.dgvUsuarios.RowHeadersWidth = 51;
             this.dgvUsuarios.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgvUsuarios.Size = new System.Drawing.Size(1183, 278);
+            this.dgvUsuarios.Size = new System.Drawing.Size(1183, 283);
             this.dgvUsuarios.TabIndex = 15;
-            this.dgvUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvClientes_CellClick);
+            this.dgvUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_CellContentClick);
             // 
             // RMPrincipal
             // 
@@ -77,25 +79,44 @@
             this.label1.TabIndex = 21;
             this.label1.Text = "Lista de usuarios";
             // 
-            // crud
+            // agregar
             // 
-            this.crud.BackColor = System.Drawing.Color.Thistle;
-            this.crud.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.crud.Location = new System.Drawing.Point(1028, 84);
-            this.crud.Name = "crud";
-            this.crud.Size = new System.Drawing.Size(129, 55);
-            this.crud.TabIndex = 22;
-            this.crud.Text = "Administrar usuarios";
-            this.crud.UseVisualStyleBackColor = false;
-            this.crud.Click += new System.EventHandler(this.crud_Click);
+            this.agregar.BackColor = System.Drawing.Color.Thistle;
+            this.agregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.agregar.Location = new System.Drawing.Point(1028, 84);
+            this.agregar.Name = "agregar";
+            this.agregar.Size = new System.Drawing.Size(129, 55);
+            this.agregar.TabIndex = 22;
+            this.agregar.Text = "Agregar Usuario";
+            this.agregar.UseVisualStyleBackColor = false;
+            this.agregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            // 
+            // txtBuscarId
+            // 
+            this.txtBuscarId.Location = new System.Drawing.Point(587, 169);
+            this.txtBuscarId.Name = "txtBuscarId";
+            this.txtBuscarId.Size = new System.Drawing.Size(151, 24);
+            this.txtBuscarId.TabIndex = 33;
+            this.txtBuscarId.TextChanged += new System.EventHandler(this.txtBuscarId_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(466, 169);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(103, 18);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "Buscar por ID:";
             // 
             // ListaUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LavenderBlush;
-            this.ClientSize = new System.Drawing.Size(1238, 447);
-            this.Controls.Add(this.crud);
+            this.ClientSize = new System.Drawing.Size(1238, 508);
+            this.Controls.Add(this.txtBuscarId);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.agregar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RMPrincipal);
             this.Controls.Add(this.dgvUsuarios);
@@ -107,7 +128,6 @@
             this.Name = "ListaUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | Gestión de Usuarios";
-            this.Load += new System.EventHandler(this.FrmUsuario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -117,6 +137,8 @@
         #endregion
         private System.Windows.Forms.Button RMPrincipal;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button crud;
+        private System.Windows.Forms.Button agregar;
+        private System.Windows.Forms.TextBox txtBuscarId;
+        private System.Windows.Forms.Label label2;
     }
 }

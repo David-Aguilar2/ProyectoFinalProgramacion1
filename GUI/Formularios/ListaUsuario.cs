@@ -22,67 +22,89 @@ namespace GUI
 
         public ListaUsuario()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            ConfigurarGrid();
         }
 
-        private void FrmUsuario_Load(object sender, EventArgs e)
-        {
-            CargarDatosDePrueba();
-        }
-
-        private void CargarDatosDePrueba()
+        private void ConfigurarGrid()
         {
             dgvUsuarios.Rows.Clear();
             dgvUsuarios.Columns.Clear();
-
             dgvUsuarios.Columns.Add("Id", "ID");
             dgvUsuarios.Columns.Add("Nombre", "Nombre");
             dgvUsuarios.Columns.Add("Correo", "Correo");
+            dgvUsuarios.Columns.Add("Usuario", "Usuario");
             dgvUsuarios.Columns.Add("Telefono", "Teléfono");
             dgvUsuarios.Columns.Add("Direccion", "Dirección");
             dgvUsuarios.Columns.Add("Estado", "Estado");
-            dgvUsuarios.Columns.Add("Usuario", "Usuario");
-
-            usuarioBLL.ObtenerUsuarios().ForEach(u =>
-            {
-                string estado = u.Estado ? "Activo" : "Inactivo";
-                dgvUsuarios.Rows.Add(u.IdUsuario, u.Nombre, u.Correo, u.Telefono, u.Direccion, estado, u.Username);
-            });
-
+            DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
+            btnEditar.Name = "Editar";
+            btnEditar.HeaderText = "Acción";
+            btnEditar.Text = "Editar";
+            btnEditar.UseColumnTextForButtonValue = true;
+            dgvUsuarios.Columns.Add(btnEditar);
+            DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
+            btnEliminar.Name = "Eliminar";
+            btnEliminar.HeaderText = "Acción";
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseColumnTextForButtonValue = true;
+            dgvUsuarios.Columns.Add(btnEliminar);
+            CargarDatos("");
             dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsuarios.AllowUserToAddRows = false;
         }
 
-        private void AbrirFormularioUnico<T>() where T : Form, new()
+        private void CargarDatos(string filtroId)
         {
-            Form formularioExistente = Application.OpenForms.OfType<T>().FirstOrDefault();
-
-            if (formularioExistente != null)
+            dgvUsuarios.Rows.Clear();
+            var usuarios = usuarioBLL.ObtenerUsuarios();
+            var listaFiltrada = string.IsNullOrEmpty(filtroId)
+                ? usuarios
+                : usuarios.Where(u => u.IdUsuario.ToString().Contains(filtroId)).ToList();
+            foreach (var u in listaFiltrada)
             {
-                formularioExistente.Close();
+                dgvUsuarios.Rows.Add(u.IdUsuario, u.Nombre, u.Correo, u.Username, u.Telefono, u.Direccion, u.Estado ? "Activo" : "Inactivo");
             }
-
-            T nuevoFormulario = new T();
-
-            nuevoFormulario.FormClosed += (s, args) => this.Show();
-
-            this.Hide();
-            nuevoFormulario.Show();
         }
-        private void dgvClientes_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
 
+        private void txtBuscarId_TextChanged(object sender, EventArgs e)
+        {
+            CargarDatos(txtBuscarId.Text);
+        }
+
+        private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            int idUsuario = Convert.ToInt32(dgvUsuarios.Rows[e.RowIndex].Cells["Id"].Value);
+            if (dgvUsuarios.Columns[e.ColumnIndex].Name == "Editar")
+            {
+                Usuario usuario = usuarioBLL.ObtenerUsuarioPorId(idUsuario);
+                FrmUsuarios frmUsuarios = new FrmUsuarios(usuario);
+                frmUsuarios.FormClosed += (s, args) => CargarDatos(txtBuscarId.Text);
+                frmUsuarios.ShowDialog();
+            }
+            else if (dgvUsuarios.Columns[e.ColumnIndex].Name == "Eliminar")
+            {
+                var confirmResult = MessageBox.Show("¿Está seguro de eliminar este usuario?", "Confirmar eliminación", MessageBoxButtons.YesNo);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    usuarioBLL.EliminarUsuario(idUsuario);
+                    CargarDatos(txtBuscarId.Text);
+                }
+            }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            FrmUsuarios frmUsuarios = new FrmUsuarios();
+            frmUsuarios.FormClosed += (s, args) => CargarDatos(txtBuscarId.Text);
+            frmUsuarios.ShowDialog();
         }
 
         private void RMPrincipal_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void crud_Click(object sender, EventArgs e)
-        {
-            AbrirFormularioUnico<FrmUsuarios>();
         }
     }
 }
