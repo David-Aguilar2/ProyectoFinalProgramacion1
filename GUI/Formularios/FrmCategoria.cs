@@ -17,113 +17,65 @@ namespace GUI.Formularios
     {
         // Instancia global de la lógica de negocio
         CategoriaBLL categoriaBLL = new CategoriaBLL();
-        public FrmCategoria()
+
+        private Categoria _categoriaEdicion;
+        public FrmCategoria(Categoria categoria = null)
         {
             InitializeComponent();
+            _categoriaEdicion = categoria;
         }
 
-        private void LimpiarCampos()
+        private void FrmCategoria_Load(object sender, EventArgs e)
         {
-            txtId.Clear();
-            txtNombre.Clear();
-            Descripcion.Clear();
-            txtNombre.Focus();
+            if (_categoriaEdicion != null)
+            {
+                lblTitulo.Text = "Editar Categoría";
+                txtId.Text = _categoriaEdicion.IdCategoria.ToString();
+                txtNombre.Text = _categoriaEdicion.Nombre;
+                Descripcion.Text = _categoriaEdicion.Descripcion;
+                btnAceptar.Text = "Actualizar";
+            }
+            else
+            {
+                lblTitulo.Text = "Nueva Categoría";
+                btnAceptar.Text = "Guardar";
+            }
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void btnAceptar_Click(object sender, EventArgs e)
         {
-            Categoria nuevaCategoria = new Categoria
+            if (string.IsNullOrWhiteSpace(txtNombre.Text))
+            {
+                MessageBox.Show("El nombre es obligatorio.");
+                return;
+            }
+
+            Categoria c = new Categoria
             {
                 Nombre = txtNombre.Text,
                 Descripcion = Descripcion.Text
             };
 
-            string resultado = categoriaBLL.InsertarCategoria(nuevaCategoria);
+            string resultado;
 
-            if (resultado == "OK")
+            if (_categoriaEdicion != null)
             {
-                MessageBox.Show("Categoría guardada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarCampos();
+                c.IdCategoria = _categoriaEdicion.IdCategoria;
+                resultado = categoriaBLL.ActualizarCategoria(c);
             }
             else
             {
-                MessageBox.Show(resultado, "Error al agregar la categoría:", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                resultado = categoriaBLL.InsertarCategoria(c);
             }
-        }
-
-        private void btnActualizar_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtId.Text))
-            {
-                MessageBox.Show("Debe buscar una categoría primero para poder actualizar.");
-                return;
-            }
-
-            Categoria categoriaEditada = new Categoria
-            {
-                IdCategoria = Convert.ToInt32(txtId.Text),
-                Nombre = txtNombre.Text,
-                Descripcion = Descripcion.Text
-            };
-
-            string resultado = categoriaBLL.ActualizarCategoria(categoriaEditada);
 
             if (resultado == "OK")
             {
-                MessageBox.Show("¡Datos actualizados con éxito!");
-                LimpiarCampos();
+                MessageBox.Show("Operación realizada con éxito", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
             else
             {
-                MessageBox.Show(resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtId.Text))
-            {
-                MessageBox.Show("Debe buscar una categoría primero para poder eliminar.");
-                return;
-            }
-            int idCategoria = Convert.ToInt32(txtId.Text);
-            string resultado = categoriaBLL.EliminarCategoria(idCategoria);
-            if (resultado == "OK")
-            {
-                MessageBox.Show("¡Categoría eliminada con éxito!");
-                LimpiarCampos();
-            }
-            else
-            {
-                MessageBox.Show(resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-            string idABuscar = Interaction.InputBox("Ingrese el ID de la categoría que desea buscar:", "Buscar categoría", "");
-
-            if (!string.IsNullOrEmpty(idABuscar))
-            {
-                try
-                {
-                    int id = Convert.ToInt32(idABuscar);
-                    var categoria = categoriaBLL.ObtenerCategoriaPorId(id);
-                    if (categoria != null)
-                    {
-                        txtId.Text = categoria.IdCategoria.ToString();
-                        txtNombre.Text = categoria.Nombre;
-                        Descripcion.Text = categoria.Descripcion;
-                    }
-                    else
-                    {
-                        MessageBox.Show("No se encontró ninguna categoría con el ID: " + id, "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Por favor, ingrese un número de ID válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                MessageBox.Show("Error: " + resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -35,10 +35,8 @@
             this.lblDireccion = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
-            this.btnAgregar = new System.Windows.Forms.Button();
-            this.btnActualizar = new System.Windows.Forms.Button();
-            this.btnEliminar = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.lblTitulo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Descripcion
@@ -47,7 +45,7 @@
             this.Descripcion.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Descripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Descripcion.ForeColor = System.Drawing.Color.Black;
-            this.Descripcion.Location = new System.Drawing.Point(153, 120);
+            this.Descripcion.Location = new System.Drawing.Point(155, 201);
             this.Descripcion.Multiline = true;
             this.Descripcion.Name = "Descripcion";
             this.Descripcion.Size = new System.Drawing.Size(316, 58);
@@ -57,7 +55,7 @@
             // 
             this.lblId.BackColor = System.Drawing.Color.Transparent;
             this.lblId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblId.Location = new System.Drawing.Point(30, 29);
+            this.lblId.Location = new System.Drawing.Point(32, 110);
             this.lblId.Name = "lblId";
             this.lblId.Size = new System.Drawing.Size(75, 17);
             this.lblId.TabIndex = 60;
@@ -67,7 +65,7 @@
             // 
             this.lblNombre.BackColor = System.Drawing.Color.Transparent;
             this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.Location = new System.Drawing.Point(29, 72);
+            this.lblNombre.Location = new System.Drawing.Point(31, 153);
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(93, 33);
             this.lblNombre.TabIndex = 61;
@@ -77,7 +75,7 @@
             // 
             this.lblDireccion.BackColor = System.Drawing.Color.Transparent;
             this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDireccion.Location = new System.Drawing.Point(30, 124);
+            this.lblDireccion.Location = new System.Drawing.Point(32, 205);
             this.lblDireccion.Name = "lblDireccion";
             this.lblDireccion.Size = new System.Drawing.Size(117, 39);
             this.lblDireccion.TabIndex = 63;
@@ -87,7 +85,7 @@
             // 
             this.txtId.BackColor = System.Drawing.Color.Pink;
             this.txtId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtId.Location = new System.Drawing.Point(153, 25);
+            this.txtId.Location = new System.Drawing.Point(155, 106);
             this.txtId.Name = "txtId";
             this.txtId.ReadOnly = true;
             this.txtId.Size = new System.Drawing.Size(76, 27);
@@ -97,75 +95,46 @@
             // 
             this.txtNombre.BackColor = System.Drawing.Color.Snow;
             this.txtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombre.Location = new System.Drawing.Point(153, 71);
+            this.txtNombre.Location = new System.Drawing.Point(155, 152);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(315, 27);
             this.txtNombre.TabIndex = 65;
             // 
-            // btnAgregar
+            // btnAceptar
             // 
-            this.btnAgregar.BackColor = System.Drawing.Color.Thistle;
-            this.btnAgregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgregar.Location = new System.Drawing.Point(6, 202);
-            this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(96, 35);
-            this.btnAgregar.TabIndex = 67;
-            this.btnAgregar.Text = "Agregar";
-            this.btnAgregar.UseVisualStyleBackColor = false;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            this.btnAceptar.BackColor = System.Drawing.Color.Thistle;
+            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptar.Location = new System.Drawing.Point(193, 287);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(112, 35);
+            this.btnAceptar.TabIndex = 68;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = false;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
-            // btnActualizar
+            // lblTitulo
             // 
-            this.btnActualizar.BackColor = System.Drawing.Color.Thistle;
-            this.btnActualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizar.Location = new System.Drawing.Point(128, 202);
-            this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(112, 35);
-            this.btnActualizar.TabIndex = 68;
-            this.btnActualizar.Text = "Actualizar";
-            this.btnActualizar.UseVisualStyleBackColor = false;
-            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
-            // 
-            // btnEliminar
-            // 
-            this.btnEliminar.BackColor = System.Drawing.Color.Thistle;
-            this.btnEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(273, 202);
-            this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(96, 35);
-            this.btnEliminar.TabIndex = 69;
-            this.btnEliminar.Text = "Eliminar";
-            this.btnEliminar.UseVisualStyleBackColor = false;
-            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.BackColor = System.Drawing.Color.Thistle;
-            this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscar.Location = new System.Drawing.Point(408, 202);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(96, 35);
-            this.btnBuscar.TabIndex = 70;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = false;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.Location = new System.Drawing.Point(193, 36);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(0, 29);
+            this.lblTitulo.TabIndex = 75;
             // 
             // FrmCategoria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::GUI.Properties.Resources.fondo_crud;
-            this.ClientSize = new System.Drawing.Size(518, 253);
+            this.ClientSize = new System.Drawing.Size(518, 353);
+            this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.Descripcion);
             this.Controls.Add(this.lblId);
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.lblDireccion);
             this.Controls.Add(this.txtId);
             this.Controls.Add(this.txtNombre);
-            this.Controls.Add(this.btnAgregar);
-            this.Controls.Add(this.btnActualizar);
-            this.Controls.Add(this.btnEliminar);
-            this.Controls.Add(this.btnBuscar);
+            this.Controls.Add(this.btnAceptar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -173,6 +142,7 @@
             this.Name = "FrmCategoria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | CRUD Categoria";
+            this.Load += new System.EventHandler(this.FrmCategoria_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,9 +156,7 @@
         private System.Windows.Forms.Label lblDireccion;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.TextBox txtNombre;
-        private System.Windows.Forms.Button btnAgregar;
-        private System.Windows.Forms.Button btnActualizar;
-        private System.Windows.Forms.Button btnEliminar;
-        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.Label lblTitulo;
     }
 }

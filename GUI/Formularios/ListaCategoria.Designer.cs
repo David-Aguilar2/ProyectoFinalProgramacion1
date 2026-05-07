@@ -28,24 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.crud = new System.Windows.Forms.Button();
+            this.agregar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvCategorias = new System.Windows.Forms.DataGridView();
             this.RGproductos = new System.Windows.Forms.Button();
+            this.txtBuscarId = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategorias)).BeginInit();
             this.SuspendLayout();
             // 
-            // crud
+            // agregar
             // 
-            this.crud.BackColor = System.Drawing.Color.Thistle;
-            this.crud.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.crud.Location = new System.Drawing.Point(1031, 92);
-            this.crud.Name = "crud";
-            this.crud.Size = new System.Drawing.Size(129, 55);
-            this.crud.TabIndex = 28;
-            this.crud.Text = "Administrar categorías";
-            this.crud.UseVisualStyleBackColor = false;
-            this.crud.Click += new System.EventHandler(this.crud_Click);
+            this.agregar.BackColor = System.Drawing.Color.Thistle;
+            this.agregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.agregar.Location = new System.Drawing.Point(1031, 92);
+            this.agregar.Name = "agregar";
+            this.agregar.Size = new System.Drawing.Size(129, 55);
+            this.agregar.TabIndex = 28;
+            this.agregar.Text = "Agregar categoría";
+            this.agregar.UseVisualStyleBackColor = false;
+            this.agregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // label1
             // 
@@ -67,13 +69,14 @@
             this.dgvCategorias.BackgroundColor = System.Drawing.Color.Orchid;
             this.dgvCategorias.ColumnHeadersHeight = 29;
             this.dgvCategorias.GridColor = System.Drawing.Color.DarkMagenta;
-            this.dgvCategorias.Location = new System.Drawing.Point(24, 160);
+            this.dgvCategorias.Location = new System.Drawing.Point(24, 227);
             this.dgvCategorias.Name = "dgvCategorias";
             this.dgvCategorias.ReadOnly = true;
             this.dgvCategorias.RowHeadersWidth = 51;
             this.dgvCategorias.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgvCategorias.Size = new System.Drawing.Size(1190, 265);
+            this.dgvCategorias.Size = new System.Drawing.Size(1190, 275);
             this.dgvCategorias.TabIndex = 25;
+            this.dgvCategorias.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategorias_CellContentClick);
             // 
             // RGproductos
             // 
@@ -87,13 +90,32 @@
             this.RGproductos.UseVisualStyleBackColor = false;
             this.RGproductos.Click += new System.EventHandler(this.RGproductos_Click);
             // 
+            // txtBuscarId
+            // 
+            this.txtBuscarId.Location = new System.Drawing.Point(561, 187);
+            this.txtBuscarId.Name = "txtBuscarId";
+            this.txtBuscarId.Size = new System.Drawing.Size(151, 22);
+            this.txtBuscarId.TabIndex = 31;
+            this.txtBuscarId.TextChanged += new System.EventHandler(this.txtBuscarId_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(440, 187);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 16);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "Buscar por ID:";
+            // 
             // ListaCategoria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1238, 447);
+            this.ClientSize = new System.Drawing.Size(1238, 524);
+            this.Controls.Add(this.txtBuscarId);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.RGproductos);
-            this.Controls.Add(this.crud);
+            this.Controls.Add(this.agregar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvCategorias);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -110,9 +132,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Button crud;
+        private System.Windows.Forms.Button agregar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvCategorias;
         private System.Windows.Forms.Button RGproductos;
+        private System.Windows.Forms.TextBox txtBuscarId;
+        private System.Windows.Forms.Label label2;
     }
 }

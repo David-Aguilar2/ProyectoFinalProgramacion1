@@ -16,27 +16,13 @@ namespace GUI.Formularios
 {
     public partial class FrmAlmacen : Form
     {
-        // Instancia global de la lógica de negocio
         ProductoBLL productoBLL = new ProductoBLL();
         CategoriaBLL categoriaBLL = new CategoriaBLL();
-        Producto productoEncontrado;
-        public FrmAlmacen()
+        private Producto _productoEdicion;
+        public FrmAlmacen(Producto producto = null)
         {
             InitializeComponent();
-        }
-
-        private void LimpiarCampos()
-        {
-            txtId.Clear();
-            txtNombre.Clear();
-            txtPrecio.Value = 0;
-            txtStock.Value = 0;
-            cmbCategoria.SelectedIndex = 0;
-            cmbEstado.SelectedIndex = 0;
-            Descripcion.Clear();
-            productoEncontrado = null;
-            txtNombre.Focus();
-
+            _productoEdicion = producto;
         }
 
         private void CargarCombos()
@@ -64,116 +50,58 @@ namespace GUI.Formularios
         private void FrmAlmacen_Load(object sender, EventArgs e)
         {
             CargarCombos();
+
+            if (_productoEdicion != null)
+            {
+                lblTitulo.Text = "Editar Producto";
+                txtId.Text = _productoEdicion.IdProducto.ToString();
+                txtNombre.Text = _productoEdicion.Nombre;
+                txtPrecio.Value = _productoEdicion.Precio;
+                txtStock.Value = _productoEdicion.Cantidad;
+                cmbCategoria.SelectedValue = _productoEdicion.IdCategoria;
+                cmbEstado.Text = _productoEdicion.Estado ? "Activo" : "Inactivo";
+                Descripcion.Text = _productoEdicion.Descripcion;
+            }
+            else
+            {
+                lblTitulo.Text = "Nuevo Producto";
+            }
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void btnAceptar_Click(object sender, EventArgs e)
         {
-            Producto nuevoProducto = new Producto
+            Producto p = new Producto
             {
                 Nombre = txtNombre.Text,
                 Descripcion = Descripcion.Text,
                 Precio = txtPrecio.Value,
                 Cantidad = (int)txtStock.Value,
-                Estado = cmbEstado.Text == "Activo",
-                IdCategoria = Convert.ToInt32(cmbCategoria.SelectedValue)
+                IdCategoria = Convert.ToInt32(cmbCategoria.SelectedValue),
+                Estado = cmbEstado.Text == "Activo"
             };
 
-            string resultado = productoBLL.InsertarProducto(nuevoProducto);
+            string resultado;
 
-            if (resultado == "OK")
+            if (_productoEdicion != null)
             {
-                MessageBox.Show("Producto agregado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarCampos();
+                p.IdProducto = _productoEdicion.IdProducto;
+                p.FechaRegistro = _productoEdicion.FechaRegistro;
+                resultado = productoBLL.ActualizarProducto(p);
             }
             else
             {
-                MessageBox.Show("Error al agregar el producto: " + resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // AGREGAR
+                resultado = productoBLL.InsertarProducto(p);
             }
-        }
 
-        private void btnActualizar_Click(object sender, EventArgs e)
-        {
-                if (string.IsNullOrEmpty(txtId.Text))
-                {
-                    MessageBox.Show("Debe buscar un producto primero para poder actualizar.");
-                    return;
-                }
-    
-                Producto productoActualizado = new Producto
-                {
-                    IdProducto = Convert.ToInt32(txtId.Text),
-                    Nombre = txtNombre.Text,
-                    Descripcion = Descripcion.Text,
-                    Precio = txtPrecio.Value,
-                    Cantidad = (int)txtStock.Value,
-                    Estado = cmbEstado.Text == "Activo",
-                    IdCategoria = Convert.ToInt32(cmbCategoria.SelectedValue),
-                    FechaRegistro = productoEncontrado.FechaRegistro
-                };
-    
-                string resultado = productoBLL.ActualizarProducto(productoActualizado);
-    
-                if (resultado == "OK")
-                {
-                    MessageBox.Show("Producto actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LimpiarCampos();
-                }
-                else
-                {
-                    MessageBox.Show("Error al actualizar el producto: " + resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtId.Text))
-            {
-                MessageBox.Show("Debe buscar un producto primero para poder eliminar.");
-                return;
-            }
-            int idProducto = int.Parse(txtId.Text);
-            string resultado = productoBLL.EliminarProducto(idProducto);
             if (resultado == "OK")
             {
-                MessageBox.Show("Producto eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarCampos();
+                MessageBox.Show("Operación realizada con éxito");
+                this.Close();
             }
             else
             {
-                MessageBox.Show("Error al eliminar el producto: " + resultado, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-            string idABuscar = Interaction.InputBox("Ingrese el ID del producto que desea buscar:", "Buscar producto", "");
-
-            if (!string.IsNullOrEmpty(idABuscar))
-            {
-                try
-                {
-                    int id = Convert.ToInt32(idABuscar);
-
-                    productoEncontrado = productoBLL.ObtenerProductoPorId(id);
-                    if (productoEncontrado != null)
-                    {
-                        txtId.Text = productoEncontrado.IdProducto.ToString();
-                        txtNombre.Text = productoEncontrado.Nombre;
-                        Descripcion.Text = productoEncontrado.Descripcion;
-                        txtPrecio.Value = productoEncontrado.Precio;
-                        txtStock.Value = productoEncontrado.Cantidad;
-                        cmbEstado.Text = productoEncontrado.Estado ? "Activo" : "Inactivo";
-                        cmbCategoria.SelectedValue = productoEncontrado.IdCategoria;
-                    }
-                    else
-                    {
-                        MessageBox.Show("No se encontró ningún producto con el ID: " + id, "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Por favor, ingrese un número de ID válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                MessageBox.Show("Error: " + resultado);
             }
         }
     }

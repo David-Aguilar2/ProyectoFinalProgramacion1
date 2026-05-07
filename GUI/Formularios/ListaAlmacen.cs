@@ -35,19 +35,43 @@ namespace GUI
             dgvAlmacen.Columns.Add("Categoria", "Categoría");
             dgvAlmacen.Columns.Add("Descripcion", "Descripción");
 
-            var listaCategorias = categoriaBLL.ObtenerCategorias();
+            CargarDatos("");
 
-            productoBLL.ObtenerProductos().ForEach(p =>
-            {
-                var categoria = listaCategorias.FirstOrDefault(c => c.IdCategoria == p.IdCategoria);
-                string nombreCategoria = (categoria != null) ? categoria.Nombre : "Sin Categoría";
+            DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
+            btnEditar.Name = "Editar";
+            btnEditar.HeaderText = "Acción";
+            btnEditar.Text = "Editar";
+            btnEditar.UseColumnTextForButtonValue = true;
+            dgvAlmacen.Columns.Add(btnEditar);
 
-                dgvAlmacen.Rows.Add(p.IdProducto, p.Nombre, p.Precio, p.Cantidad, nombreCategoria, p.Descripcion);
-            });
+            DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
+            btnEliminar.Name = "Eliminar";
+            btnEliminar.HeaderText = "Acción";
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseColumnTextForButtonValue = true;
+            dgvAlmacen.Columns.Add(btnEliminar);
 
             dgvAlmacen.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAlmacen.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAlmacen.AllowUserToAddRows = false;
+        }
+
+        private void CargarDatos(string filtroId)
+        {
+            dgvAlmacen.Rows.Clear();
+            var listaCategorias = categoriaBLL.ObtenerCategorias();
+            var productos = productoBLL.ObtenerProductos();
+
+            var listaFiltrada = string.IsNullOrEmpty(filtroId)
+                ? productos
+                : productos.Where(p => p.IdProducto.ToString().Contains(filtroId)).ToList();
+
+            listaFiltrada.ForEach(p =>
+            {
+                var categoria = listaCategorias.FirstOrDefault(c => c.IdCategoria == p.IdCategoria);
+                string nombreCategoria = categoria?.Nombre ?? "Sin Categoría";
+                dgvAlmacen.Rows.Add(p.IdProducto, p.Nombre, p.Precio, p.Cantidad, nombreCategoria, p.Descripcion);
+            });
         }
 
         private void AbrirFormularioUnico<T>() where T : Form, new()
@@ -67,9 +91,34 @@ namespace GUI
             nuevoFormulario.Show();
         }
 
-        private void dgvAlmacen_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvAlmacen_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+            if (e.RowIndex < 0) return;
+
+            int id = Convert.ToInt32(dgvAlmacen.Rows[e.RowIndex].Cells["Id"].Value);
+
+            if (dgvAlmacen.Columns[e.ColumnIndex].Name == "Eliminar")
+            {
+                DialogResult result = MessageBox.Show("¿Estás seguro que deseas eliminarlo?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    productoBLL.EliminarProducto(id);
+                    CargarDatos("");
+                }
+            }
+
+            if (dgvAlmacen.Columns[e.ColumnIndex].Name == "Editar")
+            {
+                var producto = productoBLL.ObtenerProductoPorId(id);
+                FrmAlmacen frm = new FrmAlmacen(producto);
+                frm.FormClosed += (s, args) => CargarDatos("");
+                frm.ShowDialog();
+            }
+        }
+
+        private void txtBuscarId_TextChanged(object sender, EventArgs e)
+        {
+            CargarDatos(txtBuscarId.Text);
         }
 
         private void RMPrincipal_Click(object sender, EventArgs e)
@@ -77,14 +126,17 @@ namespace GUI
             this.Close();
         }
 
-        private void crud_Click(object sender, EventArgs e)
+        private void agregar_Click(object sender, EventArgs e)
         {
-            AbrirFormularioUnico<FrmAlmacen>();
+            FrmAlmacen frm = new FrmAlmacen();
+            frm.FormClosed += (s, args) => CargarDatos("");
+            frm.ShowDialog();
         }
 
         private void gCategorias_Click(object sender, EventArgs e)
         {
             AbrirFormularioUnico<ListaCategoria>();
         }
+
     }
 }

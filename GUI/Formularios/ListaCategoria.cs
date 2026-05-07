@@ -30,36 +30,78 @@ namespace GUI.Formularios
             dgvCategorias.Columns.Add("Nombre", "Nombre");
             dgvCategorias.Columns.Add("Descripcion", "Descripción");
 
-            categoriaBLL.ObtenerCategorias().ForEach(c =>
-            {
-                dgvCategorias.Rows.Add(c.IdCategoria, c.Nombre, c.Descripcion);
-            });
+            DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
+            btnEditar.Name = "Editar";
+            btnEditar.HeaderText = "Acción";
+            btnEditar.Text = "Editar";
+            btnEditar.UseColumnTextForButtonValue = true;
+            dgvCategorias.Columns.Add(btnEditar);
+
+            DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
+            btnEliminar.Name = "Eliminar";
+            btnEliminar.HeaderText = "Acción";
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseColumnTextForButtonValue = true;
+            dgvCategorias.Columns.Add(btnEliminar);
+
+            CargarDatos("");
 
             dgvCategorias.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCategorias.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvCategorias.AllowUserToAddRows = false;
         }
 
-        private void AbrirFormularioUnico<T>() where T : Form, new()
+        private void CargarDatos(string filtroId)
         {
-            Form formularioExistente = Application.OpenForms.OfType<T>().FirstOrDefault();
+            dgvCategorias.Rows.Clear();
+            var categorias = categoriaBLL.ObtenerCategorias();
 
-            if (formularioExistente != null)
+            var listaFiltrada = string.IsNullOrEmpty(filtroId)
+                ? categorias
+                : categorias.Where(c => c.IdCategoria.ToString().Contains(filtroId)).ToList();
+
+            listaFiltrada.ForEach(c =>
             {
-                formularioExistente.Close();
-            }
-
-            T nuevoFormulario = new T();
-
-            nuevoFormulario.FormClosed += (s, args) => this.Show();
-
-            this.Hide();
-            nuevoFormulario.Show();
+                dgvCategorias.Rows.Add(c.IdCategoria, c.Nombre, c.Descripcion);
+            });
         }
 
-        private void crud_Click(object sender, EventArgs e)
+        private void txtBuscarId_TextChanged(object sender, EventArgs e)
         {
-            AbrirFormularioUnico<FrmCategoria>();
+            CargarDatos(txtBuscarId.Text);
+        }
+
+        private void dgvCategorias_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            int id = Convert.ToInt32(dgvCategorias.Rows[e.RowIndex].Cells["Id"].Value);
+
+            if (dgvCategorias.Columns[e.ColumnIndex].Name == "Eliminar")
+            {
+                DialogResult result = MessageBox.Show("¿Estas seguro que deseas eliminarlo?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    string res = categoriaBLL.EliminarCategoria(id);
+                    if (res == "OK") CargarDatos("");
+                    else MessageBox.Show(res);
+                }
+            }
+
+            if (dgvCategorias.Columns[e.ColumnIndex].Name == "Editar")
+            {
+                var categoria = categoriaBLL.ObtenerCategoriaPorId(id);
+                FrmCategoria frm = new FrmCategoria(categoria);
+                frm.FormClosed += (s, args) => CargarDatos("");
+                frm.ShowDialog();
+            }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            FrmCategoria frm = new FrmCategoria();
+            frm.FormClosed += (s, args) => CargarDatos("");
+            frm.ShowDialog();
         }
 
         private void RGproductos_Click(object sender, EventArgs e)
