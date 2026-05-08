@@ -45,65 +45,70 @@
             this.Descripcion.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Descripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Descripcion.ForeColor = System.Drawing.Color.Black;
-            this.Descripcion.Location = new System.Drawing.Point(155, 201);
+            this.Descripcion.Location = new System.Drawing.Point(155, 186);
             this.Descripcion.Multiline = true;
             this.Descripcion.Name = "Descripcion";
-            this.Descripcion.Size = new System.Drawing.Size(316, 58);
+            this.Descripcion.Size = new System.Drawing.Size(315, 58);
             this.Descripcion.TabIndex = 74;
             // 
             // lblId
             // 
+            this.lblId.AutoSize = true;
             this.lblId.BackColor = System.Drawing.Color.Transparent;
-            this.lblId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblId.Location = new System.Drawing.Point(32, 110);
+            this.lblId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblId.Location = new System.Drawing.Point(46, 72);
             this.lblId.Name = "lblId";
-            this.lblId.Size = new System.Drawing.Size(75, 17);
+            this.lblId.Size = new System.Drawing.Size(29, 18);
             this.lblId.TabIndex = 60;
             this.lblId.Text = "ID:";
             // 
             // lblNombre
             // 
+            this.lblNombre.AutoSize = true;
             this.lblNombre.BackColor = System.Drawing.Color.Transparent;
-            this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombre.Location = new System.Drawing.Point(31, 153);
+            this.lblNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombre.Location = new System.Drawing.Point(46, 135);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(93, 33);
+            this.lblNombre.Size = new System.Drawing.Size(73, 18);
             this.lblNombre.TabIndex = 61;
             this.lblNombre.Text = "Nombre:";
             // 
             // lblDireccion
             // 
+            this.lblDireccion.AutoSize = true;
             this.lblDireccion.BackColor = System.Drawing.Color.Transparent;
-            this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDireccion.Location = new System.Drawing.Point(32, 205);
+            this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDireccion.Location = new System.Drawing.Point(46, 190);
             this.lblDireccion.Name = "lblDireccion";
-            this.lblDireccion.Size = new System.Drawing.Size(117, 39);
+            this.lblDireccion.Size = new System.Drawing.Size(103, 18);
             this.lblDireccion.TabIndex = 63;
             this.lblDireccion.Text = "Descripcion:";
             // 
             // txtId
             // 
-            this.txtId.BackColor = System.Drawing.Color.Pink;
+            this.txtId.BackColor = System.Drawing.Color.Violet;
             this.txtId.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtId.Location = new System.Drawing.Point(155, 106);
+            this.txtId.Location = new System.Drawing.Point(155, 68);
             this.txtId.Name = "txtId";
             this.txtId.ReadOnly = true;
-            this.txtId.Size = new System.Drawing.Size(76, 27);
+            this.txtId.Size = new System.Drawing.Size(315, 27);
             this.txtId.TabIndex = 64;
             // 
             // txtNombre
             // 
             this.txtNombre.BackColor = System.Drawing.Color.Snow;
             this.txtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombre.Location = new System.Drawing.Point(155, 152);
+            this.txtNombre.Location = new System.Drawing.Point(155, 126);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(315, 27);
             this.txtNombre.TabIndex = 65;
             // 
             // btnAceptar
             // 
-            this.btnAceptar.BackColor = System.Drawing.Color.Thistle;
-            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptar.BackColor = System.Drawing.Color.BlueViolet;
+            this.btnAceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptar.ForeColor = System.Drawing.Color.White;
             this.btnAceptar.Location = new System.Drawing.Point(193, 287);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(112, 35);
@@ -125,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::GUI.Properties.Resources.fondo_crud;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(518, 353);
             this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.Descripcion);

@@ -44,12 +44,14 @@
             this.dgvAlmacen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvAlmacen.BackgroundColor = System.Drawing.Color.Orchid;
+            this.dgvAlmacen.BackgroundColor = System.Drawing.Color.White;
+            this.dgvAlmacen.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvAlmacen.ColumnHeadersHeight = 29;
-            this.dgvAlmacen.GridColor = System.Drawing.Color.DarkMagenta;
+            this.dgvAlmacen.GridColor = System.Drawing.Color.Lavender;
             this.dgvAlmacen.Location = new System.Drawing.Point(26, 212);
             this.dgvAlmacen.Name = "dgvAlmacen";
             this.dgvAlmacen.ReadOnly = true;
+            this.dgvAlmacen.RowHeadersVisible = false;
             this.dgvAlmacen.RowHeadersWidth = 51;
             this.dgvAlmacen.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvAlmacen.Size = new System.Drawing.Size(1190, 265);
@@ -58,11 +60,13 @@
             // 
             // RMPrincipal
             // 
-            this.RMPrincipal.BackColor = System.Drawing.Color.Thistle;
-            this.RMPrincipal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RMPrincipal.Location = new System.Drawing.Point(40, 86);
+            this.RMPrincipal.BackColor = System.Drawing.Color.BlueViolet;
+            this.RMPrincipal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RMPrincipal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RMPrincipal.ForeColor = System.Drawing.Color.White;
+            this.RMPrincipal.Location = new System.Drawing.Point(26, 12);
             this.RMPrincipal.Name = "RMPrincipal";
-            this.RMPrincipal.Size = new System.Drawing.Size(129, 55);
+            this.RMPrincipal.Size = new System.Drawing.Size(159, 55);
             this.RMPrincipal.TabIndex = 21;
             this.RMPrincipal.Text = "Regresar Menú Principal";
             this.RMPrincipal.UseVisualStyleBackColor = false;
@@ -70,11 +74,14 @@
             // 
             // agregar
             // 
-            this.agregar.BackColor = System.Drawing.Color.Thistle;
-            this.agregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.agregar.Location = new System.Drawing.Point(1069, 86);
+            this.agregar.AutoSize = true;
+            this.agregar.BackColor = System.Drawing.Color.BlueViolet;
+            this.agregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.agregar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.agregar.ForeColor = System.Drawing.Color.White;
+            this.agregar.Location = new System.Drawing.Point(817, 142);
             this.agregar.Name = "agregar";
-            this.agregar.Size = new System.Drawing.Size(129, 55);
+            this.agregar.Size = new System.Drawing.Size(242, 55);
             this.agregar.TabIndex = 24;
             this.agregar.Text = "Agregar producto";
             this.agregar.UseVisualStyleBackColor = false;
@@ -84,21 +91,24 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.label1.Location = new System.Drawing.Point(458, 21);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.BlueViolet;
+            this.label1.Location = new System.Drawing.Point(874, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(302, 38);
+            this.label1.Size = new System.Drawing.Size(342, 42);
             this.label1.TabIndex = 23;
             this.label1.Text = "Lista de productos";
             // 
             // gCategorias
             // 
-            this.gCategorias.BackColor = System.Drawing.Color.Thistle;
-            this.gCategorias.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gCategorias.Location = new System.Drawing.Point(539, 86);
+            this.gCategorias.AutoSize = true;
+            this.gCategorias.BackColor = System.Drawing.Color.BlueViolet;
+            this.gCategorias.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gCategorias.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gCategorias.ForeColor = System.Drawing.Color.White;
+            this.gCategorias.Location = new System.Drawing.Point(569, 142);
             this.gCategorias.Name = "gCategorias";
-            this.gCategorias.Size = new System.Drawing.Size(129, 55);
+            this.gCategorias.Size = new System.Drawing.Size(242, 55);
             this.gCategorias.TabIndex = 25;
             this.gCategorias.Text = "Gestionar categorias";
             this.gCategorias.UseVisualStyleBackColor = false;
@@ -107,17 +117,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(237, 173);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(37, 174);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(103, 18);
+            this.label2.Size = new System.Drawing.Size(133, 20);
             this.label2.TabIndex = 26;
             this.label2.Text = "Buscar por ID:";
             // 
             // txtBuscarId
             // 
-            this.txtBuscarId.Location = new System.Drawing.Point(358, 173);
+            this.txtBuscarId.Location = new System.Drawing.Point(186, 172);
             this.txtBuscarId.Name = "txtBuscarId";
-            this.txtBuscarId.Size = new System.Drawing.Size(151, 24);
+            this.txtBuscarId.Size = new System.Drawing.Size(363, 24);
             this.txtBuscarId.TabIndex = 27;
             this.txtBuscarId.TextChanged += new System.EventHandler(this.txtBuscarId_TextChanged);
             // 
@@ -125,7 +136,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.LavenderBlush;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1238, 499);
             this.Controls.Add(this.txtBuscarId);
             this.Controls.Add(this.label2);

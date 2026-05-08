@@ -122,5 +122,10 @@ namespace GUI.Menu_Principal
         {
             this.Close();
         }
+
+        private void lblBuscar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
