@@ -61,10 +61,12 @@ namespace GUI.Formularios
                 cmbCategoria.SelectedValue = _productoEdicion.IdCategoria;
                 cmbEstado.Text = _productoEdicion.Estado ? "Activo" : "Inactivo";
                 Descripcion.Text = _productoEdicion.Descripcion;
+                btnAceptar.Text = "Actualizar";
             }
             else
             {
                 lblTitulo.Text = "Nuevo Producto";
+                btnAceptar.Text = "Agregar";
             }
         }
 

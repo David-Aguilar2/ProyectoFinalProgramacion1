@@ -3,6 +3,7 @@ using EL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,9 +21,39 @@ namespace BLL
             return dal.BuscarPorId(id);
         }
 
+        public Usuario Login(string user, string pass)
+        {
+            return dal.ObtenerUsuarios().FirstOrDefault(u => u.Username == user && u.ClaveAcceso == pass);
+        }
+
+        public static string EncriptarClave(string clave)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(clave));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
         //Insertar
         public string InsertarUsuario(Usuario usuario)
         {
+            if (usuario.IdUsuario == 0 && usuario.Rol == Usuario.ROL_SUPERADMIN)
+            {
+                return "No se permite la creación de Administradores Absolutos por seguridad.";
+            }
+
+            if (usuario.IdUsuario == 1 && usuario.Rol != Usuario.ROL_SUPERADMIN)
+            {
+                return "El Administrador Absoluto no puede ser degradado de rango.";
+            }
+
             if (usuario == null)
                 return "Error: usuario vacío";
 
@@ -96,6 +127,11 @@ namespace BLL
         // Eliminar
         public string EliminarUsuario(int id)
         {
+            if (id == 1)
+            {
+                return "El Administrador Absoluto no puede ser eliminado del sistema.";
+            }
+
             if (id <= 0)
                 return "ID inválido";
 

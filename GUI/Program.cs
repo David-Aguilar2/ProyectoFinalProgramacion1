@@ -15,19 +15,24 @@ namespace GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            bool loginExitoso = false;
-            using (Login formLogin = new Login())
+            while (true)
             {
-                if (formLogin.ShowDialog() == DialogResult.OK)
+                using (var login = new Login())
                 {
-                    loginExitoso = true;
+                    if (login.ShowDialog() != DialogResult.OK)
+                    {
+                        return;
+                    }
                 }
-            }
 
-            if (loginExitoso)
-            {
-                // Forzamos la ejecución del Menú
-                Application.Run(new BuscarProductos());
+                BuscarProductos menu = new BuscarProductos();
+                Application.Run(menu);
+
+                if (menu.DialogResult != DialogResult.OK)
+                {
+                    break;
+                }
+
             }
 
         }

@@ -46,6 +46,8 @@
             this.Direccion = new System.Windows.Forms.TextBox();
             this.txtTelefono = new System.Windows.Forms.MaskedTextBox();
             this.lblTitulo = new System.Windows.Forms.Label();
+            this.cmbRol = new System.Windows.Forms.ComboBox();
+            this.Rol = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblClaveAcceso
@@ -74,7 +76,7 @@
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.Location = new System.Drawing.Point(48, 227);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(75, 29);
+            this.lblUsuario.Size = new System.Drawing.Size(96, 29);
             this.lblUsuario.TabIndex = 35;
             this.lblUsuario.Text = "Usuario:";
             // 
@@ -133,7 +135,7 @@
             this.lblDireccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDireccion.Location = new System.Drawing.Point(48, 373);
             this.lblDireccion.Name = "lblDireccion";
-            this.lblDireccion.Size = new System.Drawing.Size(93, 39);
+            this.lblDireccion.Size = new System.Drawing.Size(113, 39);
             this.lblDireccion.TabIndex = 24;
             this.lblDireccion.Text = "Direccion:";
             // 
@@ -169,7 +171,7 @@
             // 
             this.chkEstado.BackColor = System.Drawing.Color.Transparent;
             this.chkEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkEstado.Location = new System.Drawing.Point(51, 433);
+            this.chkEstado.Location = new System.Drawing.Point(51, 496);
             this.chkEstado.Name = "chkEstado";
             this.chkEstado.Size = new System.Drawing.Size(170, 40);
             this.chkEstado.TabIndex = 30;
@@ -182,9 +184,9 @@
             this.btnAceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAceptar.ForeColor = System.Drawing.Color.White;
-            this.btnAceptar.Location = new System.Drawing.Point(189, 476);
+            this.btnAceptar.Location = new System.Drawing.Point(186, 539);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(116, 35);
+            this.btnAceptar.Size = new System.Drawing.Size(126, 35);
             this.btnAceptar.TabIndex = 32;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = false;
@@ -215,17 +217,39 @@
             // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.Location = new System.Drawing.Point(146, 20);
+            this.lblTitulo.ForeColor = System.Drawing.Color.BlueViolet;
+            this.lblTitulo.Location = new System.Drawing.Point(157, 7);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(0, 29);
             this.lblTitulo.TabIndex = 76;
+            // 
+            // cmbRol
+            // 
+            this.cmbRol.FormattingEnabled = true;
+            this.cmbRol.Location = new System.Drawing.Point(151, 455);
+            this.cmbRol.Name = "cmbRol";
+            this.cmbRol.Size = new System.Drawing.Size(154, 24);
+            this.cmbRol.TabIndex = 78;
+            // 
+            // Rol
+            // 
+            this.Rol.AutoSize = true;
+            this.Rol.BackColor = System.Drawing.Color.Transparent;
+            this.Rol.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Rol.Location = new System.Drawing.Point(47, 455);
+            this.Rol.Name = "Rol";
+            this.Rol.Size = new System.Drawing.Size(43, 20);
+            this.Rol.TabIndex = 77;
+            this.Rol.Text = "Rol:";
             // 
             // FrmUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(518, 533);
+            this.ClientSize = new System.Drawing.Size(518, 578);
+            this.Controls.Add(this.cmbRol);
+            this.Controls.Add(this.Rol);
             this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.txtTelefono);
             this.Controls.Add(this.Direccion);
@@ -275,5 +299,7 @@
         private System.Windows.Forms.TextBox Direccion;
         private System.Windows.Forms.MaskedTextBox txtTelefono;
         private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.ComboBox cmbRol;
+        private System.Windows.Forms.Label Rol;
     }
 }

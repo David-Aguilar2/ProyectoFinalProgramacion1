@@ -1,4 +1,6 @@
 ﻿using BLL;
+using EL;
+using GUI.Autenticacion;
 using GUI.Formularios;
 using System;
 using System.Collections.Generic;
@@ -55,7 +57,7 @@ namespace GUI.Menu_Principal
         {
             var productos = productoBLL.ObtenerProductos();
 
-            int totalStock = productos.Sum(p => p.Cantidad);
+            int totalStock = productos.Count(p => p.Cantidad > 0);
             int stockBajo = productos.Count(p => p.Cantidad < 5);
 
             lblStock.Text = $"{totalStock}";
@@ -86,10 +88,32 @@ namespace GUI.Menu_Principal
             {
                 ConfigurarGrid();
                 ActualizarDashboard();
+                AplicarPermisos();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar datos: " + ex.Message);
+            }
+        }
+
+        private void AplicarPermisos()
+        {
+            var userLogueado = Login.UsuarioAutenticado;
+
+            if (userLogueado != null)
+            {
+                if (userLogueado.Rol == Usuario.ROL_TRABAJADOR)
+                {
+                    btnUsuarios.Visible = false;
+
+                }
+
+                if (userLogueado.Rol == Usuario.ROL_ADMIN)
+                {
+                    btnUsuarios.Visible = true;
+                    btnAlmacen.Visible = true;
+                }
+
             }
         }
 
@@ -120,7 +144,16 @@ namespace GUI.Menu_Principal
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            this.Close();
+            DialogResult result = MessageBox.Show("¿Está seguro que desea cerrar sesión?",
+        "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                GUI.Autenticacion.Login.UsuarioAutenticado = null;
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
 
         private void lblBuscar_Click(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using BLL;
 using DAL;
+using EL;
 using GUI.Formularios;
 using GUI.Menu_Principal;
 using System;
@@ -25,6 +26,8 @@ namespace GUI
 
         private void ConfigurarGrid()
         {
+            var userLogueado = Autenticacion.Login.UsuarioAutenticado;
+
             dgvAlmacen.Rows.Clear();
             dgvAlmacen.Columns.Clear();
 
@@ -33,23 +36,32 @@ namespace GUI
             dgvAlmacen.Columns.Add("Precio", "Precio");
             dgvAlmacen.Columns.Add("Stock", "Stock");
             dgvAlmacen.Columns.Add("Categoria", "Categoría");
-            dgvAlmacen.Columns.Add("Descripcion", "Descripción");
+            dgvAlmacen.Columns.Add("Estado", "Estado");
 
             CargarDatos("");
 
-            DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
-            btnEditar.Name = "Editar";
-            btnEditar.HeaderText = "Acción";
-            btnEditar.Text = "Editar";
-            btnEditar.UseColumnTextForButtonValue = true;
-            dgvAlmacen.Columns.Add(btnEditar);
+            if (userLogueado.Rol != Usuario.ROL_TRABAJADOR)
+            {
+                DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
+                btnEditar.Name = "Editar";
+                btnEditar.HeaderText = "Acción";
+                btnEditar.Text = "Editar";
+                btnEditar.UseColumnTextForButtonValue = true;
+                dgvAlmacen.Columns.Add(btnEditar);
 
-            DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
-            btnEliminar.Name = "Eliminar";
-            btnEliminar.HeaderText = "Acción";
-            btnEliminar.Text = "Eliminar";
-            btnEliminar.UseColumnTextForButtonValue = true;
-            dgvAlmacen.Columns.Add(btnEliminar);
+                DataGridViewButtonColumn btnEliminar = new DataGridViewButtonColumn();
+                btnEliminar.Name = "Eliminar";
+                btnEliminar.HeaderText = "Acción";
+                btnEliminar.Text = "Eliminar";
+                btnEliminar.UseColumnTextForButtonValue = true;
+                dgvAlmacen.Columns.Add(btnEliminar);
+            }
+
+            if (userLogueado.Rol == Usuario.ROL_TRABAJADOR)
+            {
+                agregar.Visible = false;
+                gCategorias.Visible = false;
+            }
 
             dgvAlmacen.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAlmacen.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -70,7 +82,8 @@ namespace GUI
             {
                 var categoria = listaCategorias.FirstOrDefault(c => c.IdCategoria == p.IdCategoria);
                 string nombreCategoria = categoria?.Nombre ?? "Sin Categoría";
-                dgvAlmacen.Rows.Add(p.IdProducto, p.Nombre, p.Precio, p.Cantidad, nombreCategoria, p.Descripcion);
+                string estadoTexto = p.Estado ? "Activo" : "Inactivo";
+                dgvAlmacen.Rows.Add(p.IdProducto, p.Nombre, p.Precio, p.Cantidad, nombreCategoria, estadoTexto);
             });
         }
 
