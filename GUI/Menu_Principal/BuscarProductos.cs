@@ -37,10 +37,13 @@ namespace GUI.Menu_Principal
             var productos = productoBLL.ObtenerProductos();
             var categorias = categoriaBLL.ObtenerCategorias();
 
+            bool filtrarStockBajo = checkStockBajo.Checked;
+
             var listaFiltrada = productos
                 .Where(p => p.Estado == true &&
                            (p.Nombre.ToLower().Contains(filtro.ToLower()) ||
                             p.Descripcion.ToLower().Contains(filtro.ToLower())))
+                .Where(p => !filtrarStockBajo || p.Cantidad < 5)
                 .Select(p => new
                 {
                     p.IdProducto,
@@ -62,7 +65,6 @@ namespace GUI.Menu_Principal
 
             lblStock.Text = $"{totalStock}";
             lblStockBajo.Text = $"{stockBajo}";
-            lblVentasHoy.Text = $"$0.00";
         }
 
 
@@ -120,11 +122,6 @@ namespace GUI.Menu_Principal
         private void btnUsuarios_Click(object sender, EventArgs e) => AbrirFormularioUnico<ListaUsuario>();
         private void btnAlmacen_Click(object sender, EventArgs e) => AbrirFormularioUnico<ListaAlmacen>();
 
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             CargarDatos(txtBuscar.Text);
@@ -134,11 +131,20 @@ namespace GUI.Menu_Principal
         {
             if (dgvProductos.SelectedRows.Count > 0)
             {
-                MessageBox.Show("Abriendo formulario de venta para: " + dgvProductos.SelectedRows[0].Cells["Nombre"].Value);
+                int idProducto = Convert.ToInt32(dgvProductos.SelectedRows[0].Cells["IdProducto"].Value);
+
+                var productoSeleccionado = productoBLL.ObtenerProductoPorId(idProducto);
+
+                FrmRegistroSalida frm = new FrmRegistroSalida();
+
+                frm.ShowDialog();
+
+                CargarDatos("");
             }
             else
             {
-                MessageBox.Show("Por favor, seleccione un producto de la lista.");
+                MessageBox.Show("Por favor, seleccione un producto de la lista para registrar el movimiento.",
+                                "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -156,9 +162,11 @@ namespace GUI.Menu_Principal
             }
         }
 
-        private void lblBuscar_Click(object sender, EventArgs e)
-        {
+        private void btnVenta_Click(object sender, EventArgs e) => AbrirFormularioUnico<ListaRegistroSalida>();
 
+        private void checkStockBajo_CheckedChanged(object sender, EventArgs e)
+        {
+            CargarDatos(txtBuscar.Text);
         }
     }
 }

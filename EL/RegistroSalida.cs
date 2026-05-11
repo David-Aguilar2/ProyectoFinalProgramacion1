@@ -26,14 +26,14 @@ namespace EL
         [ForeignKey("IdUsuario")]
         public virtual Usuario Usuario { get; set; }
 
-        [Required, StringLength(100)]
-        public string NombreCliente { get; set; }
-
-        [Required, StringLength(30)]
-        public string TelefonoCliente { get; set; }
+        [Required]
+        public string Tipo { get; set; }
 
         [Required]
         public int Cantidad { get; set; }
+
+        [Required]
+        public string Motivo { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]
@@ -43,6 +43,7 @@ namespace EL
         {
             FechaSalida = DateTime.Now;
         }
+
     }
 
 }

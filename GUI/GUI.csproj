@@ -93,6 +93,12 @@
     <Compile Include="Formularios\FrmCategoria.Designer.cs">
       <DependentUpon>FrmCategoria.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\FrmRegistroSalida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\FrmRegistroSalida.Designer.cs">
+      <DependentUpon>FrmRegistroSalida.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\FrmUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,12 @@
     </Compile>
     <Compile Include="Formularios\ListaCategoria.Designer.cs">
       <DependentUpon>ListaCategoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\ListaRegistroSalida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\ListaRegistroSalida.Designer.cs">
+      <DependentUpon>ListaRegistroSalida.cs</DependentUpon>
     </Compile>
     <Compile Include="Menu_Principal\BuscarProductos.cs">
       <SubType>Form</SubType>
@@ -141,6 +153,9 @@
     <EmbeddedResource Include="Formularios\FrmCategoria.resx">
       <DependentUpon>FrmCategoria.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\FrmRegistroSalida.resx">
+      <DependentUpon>FrmRegistroSalida.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FrmUsuarios.resx">
       <DependentUpon>FrmUsuarios.cs</DependentUpon>
     </EmbeddedResource>
@@ -149,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\ListaCategoria.resx">
       <DependentUpon>ListaCategoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\ListaRegistroSalida.resx">
+      <DependentUpon>ListaRegistroSalida.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu_Principal\BuscarProductos.resx">
       <DependentUpon>BuscarProductos.cs</DependentUpon>

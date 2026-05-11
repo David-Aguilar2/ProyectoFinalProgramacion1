@@ -53,29 +53,42 @@ namespace BLL
         }
 
         //Actualizar
-        public string ActualizarProducto(Producto producto)
+        public string ActualizarProducto(Producto productoEditado, int idUsuario)
         {
-            if (producto == null)
-                return "Error: producto vacío";
+            using (var db = new IconicFashionDbContext())
+            {
+                try
+                {
+                    var productoOriginal = db.Productos.Find(productoEditado.IdProducto);
+                    if (productoOriginal == null) return "Producto no encontrado";
 
-            if (producto.IdProducto <= 0)
-                return "Producto inválido";
+                    if (productoOriginal.Cantidad != productoEditado.Cantidad)
+                    {
+                        int diferencia = productoEditado.Cantidad - productoOriginal.Cantidad;
 
-            if (string.IsNullOrWhiteSpace(producto.Nombre))
-                return "El nombre es obligatorio";
+                        RegistroSalida movimientoAuto = new RegistroSalida
+                        {
+                            IdProducto = productoEditado.IdProducto,
+                            IdUsuario = idUsuario,
+                            FechaSalida = DateTime.Now,
+                            Motivo = "Stock actualizado por administrador",
+                            Tipo = diferencia > 0 ? "ENTRADA" : "SALIDA",
+                            Cantidad = Math.Abs(diferencia)
+                        };
 
-            if (producto.Precio <= 0)
-                return "El precio debe ser mayor a 0";
+                        db.RegistrosSalida.Add(movimientoAuto);
+                    }
 
-            if (producto.Cantidad < 0)
-                return "Cantidad inválida";
+                    db.Entry(productoOriginal).CurrentValues.SetValues(productoEditado);
 
-            if (producto.IdCategoria <= 0)
-                return "Debe seleccionar una categoría válida";
-
-            dal.Guardar(producto);
-
-            return "OK";
+                    db.SaveChanges();
+                    return "OK";
+                }
+                catch (Exception ex)
+                {
+                    return "Error al actualizar: " + ex.Message;
+                }
+            }
         }
 
         // Eliminar

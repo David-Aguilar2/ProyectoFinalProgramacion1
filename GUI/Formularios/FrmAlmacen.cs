@@ -82,13 +82,15 @@ namespace GUI.Formularios
                 Estado = cmbEstado.Text == "Activo"
             };
 
+            int idUsuarioActual = GUI.Autenticacion.Login.UsuarioAutenticado.IdUsuario;
+
             string resultado;
 
             if (_productoEdicion != null)
             {
                 p.IdProducto = _productoEdicion.IdProducto;
                 p.FechaRegistro = _productoEdicion.FechaRegistro;
-                resultado = productoBLL.ActualizarProducto(p);
+                resultado = productoBLL.ActualizarProducto(p, idUsuarioActual);
             }
             else
             {

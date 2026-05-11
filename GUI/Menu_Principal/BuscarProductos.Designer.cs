@@ -36,16 +36,14 @@
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dgvProductos = new System.Windows.Forms.DataGridView();
-            this.btnBuscar = new System.Windows.Forms.Button();
             this.lblBuscar = new System.Windows.Forms.Label();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.gbxDashboardRapido = new System.Windows.Forms.GroupBox();
-            this.lblVentasHoy = new System.Windows.Forms.Label();
             this.lblStockBajo = new System.Windows.Forms.Label();
             this.lblStock = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkStockBajo = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
             this.gbxDashboardRapido.SuspendLayout();
@@ -62,8 +60,9 @@
             this.btnVenta.Name = "btnVenta";
             this.btnVenta.Size = new System.Drawing.Size(251, 69);
             this.btnVenta.TabIndex = 1;
-            this.btnVenta.Text = "Venta";
+            this.btnVenta.Text = "Registro Movimientos";
             this.btnVenta.UseVisualStyleBackColor = false;
+            this.btnVenta.Click += new System.EventHandler(this.btnVenta_Click);
             // 
             // btnAlmacen
             // 
@@ -106,17 +105,17 @@
             this.btnNuevaVenta.Name = "btnNuevaVenta";
             this.btnNuevaVenta.Size = new System.Drawing.Size(223, 64);
             this.btnNuevaVenta.TabIndex = 4;
-            this.btnNuevaVenta.Text = "Nueva Venta";
+            this.btnNuevaVenta.Text = "Nuevo movimiento";
             this.btnNuevaVenta.UseVisualStyleBackColor = false;
             this.btnNuevaVenta.Click += new System.EventHandler(this.btnNuevaVenta_Click);
             // 
             // txtBuscar
             // 
             this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBuscar.Location = new System.Drawing.Point(100, 194);
+            this.txtBuscar.Location = new System.Drawing.Point(103, 194);
             this.txtBuscar.Margin = new System.Windows.Forms.Padding(4);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(733, 38);
+            this.txtBuscar.Size = new System.Drawing.Size(580, 38);
             this.txtBuscar.TabIndex = 6;
             this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
             // 
@@ -150,18 +149,8 @@
             this.dgvProductos.RowHeadersWidth = 65;
             this.dgvProductos.RowTemplate.Height = 24;
             this.dgvProductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProductos.Size = new System.Drawing.Size(849, 373);
+            this.dgvProductos.Size = new System.Drawing.Size(885, 373);
             this.dgvProductos.TabIndex = 12;
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Location = new System.Drawing.Point(831, 194);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(40, 35);
-            this.btnBuscar.TabIndex = 13;
-            this.btnBuscar.Text = "🔍︎";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // lblBuscar
             // 
@@ -174,7 +163,6 @@
             this.lblBuscar.Size = new System.Drawing.Size(72, 22);
             this.lblBuscar.TabIndex = 14;
             this.lblBuscar.Text = "Buscar";
-            this.lblBuscar.Click += new System.EventHandler(this.lblBuscar_Click);
             // 
             // btnCerrarSesion
             // 
@@ -193,28 +181,17 @@
             // gbxDashboardRapido
             // 
             this.gbxDashboardRapido.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbxDashboardRapido.Controls.Add(this.lblVentasHoy);
             this.gbxDashboardRapido.Controls.Add(this.lblStockBajo);
             this.gbxDashboardRapido.Controls.Add(this.lblStock);
-            this.gbxDashboardRapido.Controls.Add(this.label3);
             this.gbxDashboardRapido.Controls.Add(this.label2);
             this.gbxDashboardRapido.Controls.Add(this.label1);
             this.gbxDashboardRapido.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbxDashboardRapido.Location = new System.Drawing.Point(877, 270);
+            this.gbxDashboardRapido.Location = new System.Drawing.Point(913, 270);
             this.gbxDashboardRapido.Name = "gbxDashboardRapido";
-            this.gbxDashboardRapido.Size = new System.Drawing.Size(267, 228);
+            this.gbxDashboardRapido.Size = new System.Drawing.Size(228, 228);
             this.gbxDashboardRapido.TabIndex = 17;
             this.gbxDashboardRapido.TabStop = false;
             this.gbxDashboardRapido.Text = "Resumen de Inventario";
-            // 
-            // lblVentasHoy
-            // 
-            this.lblVentasHoy.AutoSize = true;
-            this.lblVentasHoy.Location = new System.Drawing.Point(106, 116);
-            this.lblVentasHoy.Name = "lblVentasHoy";
-            this.lblVentasHoy.Size = new System.Drawing.Size(27, 20);
-            this.lblVentasHoy.TabIndex = 5;
-            this.lblVentasHoy.Text = "$$";
             // 
             // lblStockBajo
             // 
@@ -234,15 +211,6 @@
             this.lblStock.TabIndex = 3;
             this.lblStock.Text = "$$";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 116);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 20);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Ventas hoy:";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -261,16 +229,27 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Productos en Stock:";
             // 
+            // checkStockBajo
+            // 
+            this.checkStockBajo.AutoSize = true;
+            this.checkStockBajo.Location = new System.Drawing.Point(700, 201);
+            this.checkStockBajo.Name = "checkStockBajo";
+            this.checkStockBajo.Size = new System.Drawing.Size(205, 24);
+            this.checkStockBajo.TabIndex = 19;
+            this.checkStockBajo.Text = "🔍︎Mostrar stock bajo";
+            this.checkStockBajo.UseVisualStyleBackColor = true;
+            this.checkStockBajo.CheckedChanged += new System.EventHandler(this.checkStockBajo_CheckedChanged);
+            // 
             // BuscarProductos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1146, 671);
+            this.Controls.Add(this.checkStockBajo);
             this.Controls.Add(this.gbxDashboardRapido);
             this.Controls.Add(this.btnCerrarSesion);
             this.Controls.Add(this.lblBuscar);
-            this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.dgvProductos);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtBuscar);
@@ -305,15 +284,13 @@
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.DataGridView dgvProductos;
-        private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.Label lblBuscar;
         private System.Windows.Forms.Button btnCerrarSesion;
         private System.Windows.Forms.GroupBox gbxDashboardRapido;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblVentasHoy;
         private System.Windows.Forms.Label lblStockBajo;
         private System.Windows.Forms.Label lblStock;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkStockBajo;
     }
 }

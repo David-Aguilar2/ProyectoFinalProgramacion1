@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAlmacen));
             this.Descripcion = new System.Windows.Forms.TextBox();
-            this.lblClaveAcceso = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblId = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
@@ -39,12 +38,13 @@
             this.txtId = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.btnAceptar = new System.Windows.Forms.Button();
-            this.cmbCategoria = new System.Windows.Forms.ComboBox();
-            this.cmbEstado = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.txtPrecio = new System.Windows.Forms.NumericUpDown();
             this.txtStock = new System.Windows.Forms.NumericUpDown();
             this.lblTitulo = new System.Windows.Forms.Label();
+            this.lblClaveAcceso = new System.Windows.Forms.Label();
+            this.cmbCategoria = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbEstado = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.txtPrecio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStock)).BeginInit();
             this.SuspendLayout();
@@ -60,17 +60,6 @@
             this.Descripcion.Name = "Descripcion";
             this.Descripcion.Size = new System.Drawing.Size(297, 49);
             this.Descripcion.TabIndex = 58;
-            // 
-            // lblClaveAcceso
-            // 
-            this.lblClaveAcceso.AutoSize = true;
-            this.lblClaveAcceso.BackColor = System.Drawing.Color.Transparent;
-            this.lblClaveAcceso.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClaveAcceso.Location = new System.Drawing.Point(45, 316);
-            this.lblClaveAcceso.Name = "lblClaveAcceso";
-            this.lblClaveAcceso.Size = new System.Drawing.Size(96, 20);
-            this.lblClaveAcceso.TabIndex = 56;
-            this.lblClaveAcceso.Text = "Categoría:";
             // 
             // lblUsuario
             // 
@@ -159,33 +148,6 @@
             this.btnAceptar.UseVisualStyleBackColor = false;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
-            // cmbCategoria
-            // 
-            this.cmbCategoria.FormattingEnabled = true;
-            this.cmbCategoria.Location = new System.Drawing.Point(168, 316);
-            this.cmbCategoria.Name = "cmbCategoria";
-            this.cmbCategoria.Size = new System.Drawing.Size(296, 24);
-            this.cmbCategoria.TabIndex = 59;
-            // 
-            // cmbEstado
-            // 
-            this.cmbEstado.FormattingEnabled = true;
-            this.cmbEstado.Location = new System.Drawing.Point(167, 266);
-            this.cmbEstado.Name = "cmbEstado";
-            this.cmbEstado.Size = new System.Drawing.Size(121, 24);
-            this.cmbEstado.TabIndex = 61;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(45, 270);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 20);
-            this.label1.TabIndex = 60;
-            this.label1.Text = "Estado:";
-            // 
             // txtPrecio
             // 
             this.txtPrecio.DecimalPlaces = 2;
@@ -215,6 +177,44 @@
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(0, 29);
             this.lblTitulo.TabIndex = 64;
+            // 
+            // lblClaveAcceso
+            // 
+            this.lblClaveAcceso.AutoSize = true;
+            this.lblClaveAcceso.BackColor = System.Drawing.Color.Transparent;
+            this.lblClaveAcceso.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClaveAcceso.Location = new System.Drawing.Point(45, 316);
+            this.lblClaveAcceso.Name = "lblClaveAcceso";
+            this.lblClaveAcceso.Size = new System.Drawing.Size(96, 20);
+            this.lblClaveAcceso.TabIndex = 56;
+            this.lblClaveAcceso.Text = "Categoría:";
+            // 
+            // cmbCategoria
+            // 
+            this.cmbCategoria.FormattingEnabled = true;
+            this.cmbCategoria.Location = new System.Drawing.Point(168, 316);
+            this.cmbCategoria.Name = "cmbCategoria";
+            this.cmbCategoria.Size = new System.Drawing.Size(296, 24);
+            this.cmbCategoria.TabIndex = 59;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(45, 270);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 20);
+            this.label1.TabIndex = 60;
+            this.label1.Text = "Estado:";
+            // 
+            // cmbEstado
+            // 
+            this.cmbEstado.FormattingEnabled = true;
+            this.cmbEstado.Location = new System.Drawing.Point(167, 266);
+            this.cmbEstado.Name = "cmbEstado";
+            this.cmbEstado.Size = new System.Drawing.Size(121, 24);
+            this.cmbEstado.TabIndex = 61;
             // 
             // FrmAlmacen
             // 
@@ -256,7 +256,6 @@
         #endregion
 
         private System.Windows.Forms.TextBox Descripcion;
-        private System.Windows.Forms.Label lblClaveAcceso;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label lblId;
         private System.Windows.Forms.Label lblNombre;
@@ -265,11 +264,12 @@
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Button btnAceptar;
-        private System.Windows.Forms.ComboBox cmbCategoria;
-        private System.Windows.Forms.ComboBox cmbEstado;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown txtPrecio;
         private System.Windows.Forms.NumericUpDown txtStock;
         private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Label lblClaveAcceso;
+        private System.Windows.Forms.ComboBox cmbCategoria;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbEstado;
     }
 }

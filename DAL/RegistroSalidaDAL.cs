@@ -2,61 +2,54 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 
 namespace DAL
 {
     public class RegistroSalidaDAL
     {
-        IconicFashionDbContext _db;
+        private IconicFashionDbContext _db;
 
-        public int Guardar(RegistroSalida registroSalida, int id = 0, bool esEdicion = false)
+        public int Guardar(RegistroSalida registroSalida)
         {
-            int resultado = 0;
-
-            _db = new IconicFashionDbContext();
-
-            if (esEdicion)
+            using (_db = new IconicFashionDbContext())
             {
-                registroSalida.IdRegistro = id;
+                if (registroSalida.IdRegistro == 0)
+                {
+                    _db.RegistrosSalida.Add(registroSalida);
+                }
+                else
+                {
+                    _db.Entry(registroSalida).State = EntityState.Modified;
+                }
 
-                _db.Entry(registroSalida).State = EntityState.Modified;
                 _db.SaveChanges();
+                return registroSalida.IdRegistro;
             }
-            else
-            {
-                _db.RegistrosSalida.Add(registroSalida);
-                _db.SaveChanges();
-            }
-
-            resultado = registroSalida.IdRegistro;
-            return resultado;
         }
 
         public List<RegistroSalida> ObtenerRegistrosSalida()
         {
-            _db = new IconicFashionDbContext();
-            return _db.RegistrosSalida.ToList();
+            using (_db = new IconicFashionDbContext())
+            {
+                return _db.RegistrosSalida
+                          .Include(r => r.Producto)
+                          .Include(r => r.Usuario)
+                          .ToList();
+            }
         }
 
-        public int Eliminar(int id)
+        public void Eliminar(int id)
         {
-            int resultado = 0;
-            _db = new IconicFashionDbContext();
-
-            RegistroSalida registroSalida = _db.RegistrosSalida.Find(id);
-
-            if (registroSalida == null)
-                return resultado;
-
-            _db.RegistrosSalida.Remove(registroSalida);
-            _db.SaveChanges();
-
-            resultado = registroSalida.IdRegistro;
-
-            return resultado;
+            using (_db = new IconicFashionDbContext())
+            {
+                var registro = _db.RegistrosSalida.Find(id);
+                if (registro != null)
+                {
+                    _db.RegistrosSalida.Remove(registro);
+                    _db.SaveChanges();
+                }
+            }
         }
     }
 }
