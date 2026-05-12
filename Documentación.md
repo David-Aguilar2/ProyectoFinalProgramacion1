@@ -115,3 +115,149 @@ public class RegistroSalida
         FechaSalida = DateTime.Now; // Registro automático de marca temporal
     }
 }
+
+Capa DAL (Data Access Layer)
+Esta capa es la única responsable de comunicarse con SQL Server. Utiliza Entity Framework 6 y sigue un patrón de acceso directo a través de clases especializadas por entidad.
+
+Componentes
+- IconicFashionDbContext
+Es el coordinador principal de Entity Framework. Gestiona las conexiones y el mapeo de objetos a tablas.
+
+
+public class IconicFashionDbContext : DbContext
+{
+    // Constructor: Vincula el código con la cadena de conexión del App.config
+    public IconicFashionDbContext() : base("name=IconicFashionDbContext")
+    {
+        // Database.SetInitializer(null): Desactiva la creación automática de tablas.
+        // Esto es vital para evitar errores si la base de datos ya existe o si 
+        // hay discrepancias con el historial de migraciones de Entity Framework.
+        Database.SetInitializer<IconicFashionDbContext>(null);
+    }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+        // modelBuilder.Conventions.Remove: Elimina la convención que incluye metadatos.
+        // Evita que el sistema busque la tabla técnica '__MigrationHistory', 
+        // mejorando la velocidad de inicio y evitando excepciones de permisos.
+        modelBuilder.Conventions.Remove<System.Data.Entity.Infrastructure.IncludeMetadataConvention>();
+        base.OnModelCreating(modelBuilder);
+    }
+
+    // DbSet<T>: Representan las tablas físicas. Cada propiedad permite realizar 
+    // consultas LINQ que EF traduce automáticamente a lenguaje SQL.
+    public virtual DbSet<EL.Usuario> Usuarios { get; set; }
+    public virtual DbSet<EL.Categoria> Categorias { get; set; }
+    public virtual DbSet<EL.Producto> Productos { get; set; }
+    public virtual DbSet<EL.RegistroSalida> RegistrosSalida { get; set; }
+}
+
+-Métodos CRUD Estándar (UsuarioDAL, CategoriaDAL, ProductoDAL)
+public class ProductoDAL 
+{
+    IconicFashionDbContext _db;
+
+    // ObtenerProducto: Recupera un único registro.
+    // El método .Find(id) es el más eficiente porque busca primero en la 
+    // memoria local antes de consultar al servidor SQL.
+    public Producto ObtenerProducto(int id)
+    {
+        _db = new IconicFashionDbContext();
+        return _db.Productos.Find(id); 
+    }
+
+    // Guardar: Método polivalente (Upsert).
+    // Si IdProducto > 0: Usa .Entry().State = Modified para generar un "UPDATE" en SQL.
+    // Si IdProducto == 0: Usa .Add() para generar un "INSERT INTO".
+    // .SaveChanges() ejecuta físicamente la instrucción en la base de datos.
+    public int Guardar(Producto producto)
+    {
+        _db = new IconicFashionDbContext();
+        if (producto.IdProducto > 0) 
+            _db.Entry(producto).State = EntityState.Modified;
+        else 
+            _db.Productos.Add(producto);
+
+        _db.SaveChanges();
+        return producto.IdProducto;
+    }
+
+    // ObtenerProductos: Carga masiva de datos.
+    // .ToList() fuerza la ejecución de la consulta SELECT * FROM Productos.
+    public List<Producto> ObtenerProductos()
+    {
+        _db = new IconicFashionDbContext();
+        return _db.Productos.ToList(); 
+    }
+
+    // Eliminar: Borrado físico.
+    // Primero localiza el objeto y luego lo marca para su eliminación definitiva.
+    public int Eliminar(int id)
+    {
+        _db = new IconicFashionDbContext();
+        Producto obj = _db.Productos.Find(id);
+        if (obj != null) {
+            _db.Productos.Remove(obj);
+            _db.SaveChanges();
+        }
+        return id;
+    }
+}
+
+-Operaciones Especializadas: RegistroSalidaDAL
+
+Esta clase es diferente a las demás por dos razones críticas:
+
+Gestión de Memoria: Utiliza bloques using para asegurar que la conexión se cierre inmediatamente, evitando conflictos de rastreo de entidades.
+
+Carga Relacionada (Joins): Utiliza .Include() para traer los nombres de productos y usuarios en una sola consulta, evitando que la grid muestre celdas vacías o "N/A".
+
+public class RegistroSalidaDAL
+{
+    private IconicFashionDbContext _db;
+
+    public int Guardar(RegistroSalida registroSalida)
+    {
+        // Bloque using: Garantiza que la conexión se cierre y se libere de 
+        // memoria (Dispose) al terminar, incluso si ocurre un error. 
+        // Esto previene fugas de memoria y bloqueos en la base de datos.
+        using (_db = new IconicFashionDbContext())
+        {
+            if (registroSalida.IdRegistro == 0)
+                _db.RegistrosSalida.Add(registroSalida);
+            else
+                _db.Entry(registroSalida).State = EntityState.Modified;
+
+            _db.SaveChanges();
+            return registroSalida.IdRegistro;
+        }
+    }
+
+    public List<RegistroSalida> ObtenerRegistrosSalida()
+    {
+        using (_db = new IconicFashionDbContext())
+        {
+            // Eager Loading (.Include): Por defecto, EF no carga datos de otras tablas.
+            // .Include(r => r.Producto) fuerza un "INNER JOIN" en SQL para traer el 
+            // nombre del producto y del usuario en una sola transacción. 
+            // Sin esto, veríamos IDs o valores nulos en la interfaz de usuario.
+            return _db.RegistrosSalida
+                      .Include(r => r.Producto)
+                      .Include(r => r.Usuario)
+                      .ToList();
+        }
+    }
+}
+
+
+    
+
+
+
+
+
+
+
+
+
+
