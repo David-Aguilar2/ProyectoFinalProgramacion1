@@ -2,17 +2,22 @@
   <Configurations>
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
+    <Platform Name="x86" />
   </Configurations>
   <Project Path="BLL/BLL.csproj" Id="4d67bf86-eb51-4f96-8197-ef6167ec71be">
     <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
   </Project>
   <Project Path="DAL/DAL.csproj" Id="7d21dccb-fcc1-4c1b-b6a9-e238b2bd0ef4">
     <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
   </Project>
   <Project Path="EL/EL.csproj" Id="cd13714c-7a82-4bb7-9b69-e11344bcf9f9">
     <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
   </Project>
   <Project Path="GUI/GUI.csproj" Id="7b3166a2-c3d3-452a-908c-3d5051fd74bd">
     <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
   </Project>
 </Solution>

@@ -42,7 +42,6 @@ namespace EL
 
         // Fecha y hora exacta del movimiento; usa datetime2 para mayor precisión en SQL
         [Required]
-        [Column(TypeName = "datetime2")]
         public DateTime FechaSalida { get; set; }
 
         // Constructor: asigna automáticamente la fecha y hora actual al crear el registro
