@@ -13,21 +13,27 @@ using System.Windows.Forms;
 
 namespace GUI
 {
+    // Formulario que muestra la tabla con todos los productos del inventario
     public partial class ListaAlmacen : Form
     {
         ProductoBLL productoBLL = new ProductoBLL();
         CategoriaBLL categoriaBLL = new CategoriaBLL();
 
+        // Variable para saber si cerramos la ventana para ir al menú o para salir del programa
+        private bool regresandoAlMenu = false;
+
         public ListaAlmacen()
         {
             InitializeComponent();
-            ConfigurarGrid();
+            ConfigurarGrid(); // Prepara la tabla al abrir la ventana
         }
 
+        // Configura cómo se ve la tabla y qué permisos tiene el usuario
         private void ConfigurarGrid()
         {
             var userLogueado = Autenticacion.Login.UsuarioAutenticado;
 
+            // Limpia la tabla y crea las columnas de información básica
             dgvAlmacen.Rows.Clear();
             dgvAlmacen.Columns.Clear();
 
@@ -38,8 +44,9 @@ namespace GUI
             dgvAlmacen.Columns.Add("Categoria", "Categoría");
             dgvAlmacen.Columns.Add("Estado", "Estado");
 
-            CargarDatos("");
+            CargarDatos(""); // Llena la tabla con los productos
 
+            // SEGURIDAD: Si no es un trabajador (es Admin), le muestra botones de Editar y Eliminar
             if (userLogueado.Rol != Usuario.ROL_TRABAJADOR)
             {
                 DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
@@ -57,27 +64,32 @@ namespace GUI
                 dgvAlmacen.Columns.Add(btnEliminar);
             }
 
+            // SEGURIDAD: Si es trabajador, le esconde los botones de agregar y gestionar categorías
             if (userLogueado.Rol == Usuario.ROL_TRABAJADOR)
             {
                 agregar.Visible = false;
                 gCategorias.Visible = false;
             }
 
+            // Ajustes visuales de la tabla
             dgvAlmacen.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAlmacen.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAlmacen.AllowUserToAddRows = false;
         }
 
+        // Busca los productos y los pone dentro de la tabla
         private void CargarDatos(string filtroId)
         {
             dgvAlmacen.Rows.Clear();
             var listaCategorias = categoriaBLL.ObtenerCategorias();
             var productos = productoBLL.ObtenerProductos();
 
+            // Si el usuario escribió algo en el buscador, filtramos la lista por ID
             var listaFiltrada = string.IsNullOrEmpty(filtroId)
                 ? productos
                 : productos.Where(p => p.IdProducto.ToString().Contains(filtroId)).ToList();
 
+            // Por cada producto encontrado, agregamos una fila a la tabla
             listaFiltrada.ForEach(p =>
             {
                 var categoria = listaCategorias.FirstOrDefault(c => c.IdCategoria == p.IdCategoria);
@@ -87,6 +99,7 @@ namespace GUI
             });
         }
 
+        // Función auxiliar para abrir una ventana nueva y ocultar la actual
         private void AbrirFormularioUnico<T>() where T : Form, new()
         {
             Form formularioExistente = Application.OpenForms.OfType<T>().FirstOrDefault();
@@ -97,48 +110,56 @@ namespace GUI
             }
 
             T nuevoFormulario = new T();
-
+            // Cuando se cierre la ventana nueva, volvemos a mostrar esta lista
             nuevoFormulario.FormClosed += (s, args) => this.Show();
 
             this.Hide();
             nuevoFormulario.Show();
         }
 
+        // Se ejecuta al hacer clic en los botones de "Editar" o "Eliminar" dentro de la tabla
         private void dgvAlmacen_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
             int id = Convert.ToInt32(dgvAlmacen.Rows[e.RowIndex].Cells["Id"].Value);
 
+            // Acción para el botón Eliminar
             if (dgvAlmacen.Columns[e.ColumnIndex].Name == "Eliminar")
             {
                 DialogResult result = MessageBox.Show("¿Estás seguro que deseas eliminarlo?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     productoBLL.EliminarProducto(id);
-                    CargarDatos("");
+                    CargarDatos(""); // Refresca la tabla
                 }
             }
 
+            // Acción para el botón Editar
             if (dgvAlmacen.Columns[e.ColumnIndex].Name == "Editar")
             {
                 var producto = productoBLL.ObtenerProductoPorId(id);
                 FrmAlmacen frm = new FrmAlmacen(producto);
+                // Al cerrar la edición, refresca los datos de la tabla
                 frm.FormClosed += (s, args) => CargarDatos("");
                 frm.ShowDialog();
             }
         }
 
+        // Actualiza la tabla automáticamente mientras el usuario escribe en el buscador
         private void txtBuscarId_TextChanged(object sender, EventArgs e)
         {
             CargarDatos(txtBuscarId.Text);
         }
 
+        // Botón para cerrar esta ventana y volver al menú principal
         private void RMPrincipal_Click(object sender, EventArgs e)
         {
+            regresandoAlMenu = true;
             this.Close();
         }
 
+        // Botón para abrir el formulario de agregar un producto nuevo
         private void agregar_Click(object sender, EventArgs e)
         {
             FrmAlmacen frm = new FrmAlmacen();
@@ -146,31 +167,34 @@ namespace GUI
             frm.ShowDialog();
         }
 
+        // Botón para ir a la gestión de categorías
         private void gCategorias_Click(object sender, EventArgs e)
         {
             AbrirFormularioUnico<ListaCategoria>();
         }
 
-        // Evento de cierre del programa completo con confirmación
+        // Controla qué pasa cuando se intenta cerrar la ventana (por la X o por código)
         private void ListaAlmacen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Cuadro de diálogo de confirmación
-            DialogResult resultado = MessageBox.Show(
-                "¿Estás seguro de querer salir? Se cerrará la sesión actual",
-                "Confirmar Salida",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
+            // Si no estamos regresando al menú (es decir, el usuario cerró la app), pide confirmación
+            if (!regresandoAlMenu)
+            {
+                DialogResult resultado = MessageBox.Show(
+                    "¿Estás seguro de querer salir? Se cerrará la sesión actual",
+                    "Confirmar Salida",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
 
-            // Si el usuario presiona "No", cancelamos el cierre
-            if (resultado == DialogResult.No)
-            {
-                e.Cancel = true; // Esto detiene el cierre del formulario
-            }
-            else
-            {
-                // Si dice que "Sí", cerramos toda la aplicación por completo
-                Application.ExitThread();
+                if (resultado == DialogResult.No)
+                {
+                    e.Cancel = true; // No cierra la ventana
+                }
+                else
+                {
+                    // Si confirma, cierra toda la aplicación por completo
+                    Application.ExitThread();
+                }
             }
         }
     }

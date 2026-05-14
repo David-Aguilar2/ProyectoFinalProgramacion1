@@ -10,22 +10,26 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
+    // Esta clase contiene las reglas y validaciones antes de guardar o borrar usuarios
     public class UsuarioBLL
     {
+        // Conexión con la capa de datos
         UsuarioDAL dal = new UsuarioDAL();
 
-        //Buscar por ID
+        // Busca un usuario por su ID, validando que el número sea correcto
         public Usuario ObtenerUsuarioPorId(int id)
         {
             if (id <= 0) return null;
             return dal.BuscarPorId(id);
         }
 
+        // Verifica si el nombre de usuario y la contraseña coinciden para dejarlo entrar
         public Usuario Login(string user, string pass)
         {
             return dal.ObtenerUsuarios().FirstOrDefault(u => u.Username == user && u.ClaveAcceso == pass);
         }
 
+        // Convierte una contraseña de texto simple a un código secreto (Hash) para mayor seguridad
         public static string EncriptarClave(string clave)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -41,19 +45,22 @@ namespace BLL
             }
         }
 
-        //Insertar
+        // Registra un usuario nuevo validando que cumpla con todos los requisitos
         public string InsertarUsuario(Usuario usuario)
         {
+            // Regla de seguridad: No permite crear más SuperAdmins desde aquí
             if (usuario.IdUsuario == 0 && usuario.Rol == Usuario.ROL_SUPERADMIN)
             {
                 return "No se permite la creación de Administradores Absolutos por seguridad.";
             }
 
+            // Regla de seguridad: El SuperAdmin principal no puede dejar de serlo
             if (usuario.IdUsuario == 1 && usuario.Rol != Usuario.ROL_SUPERADMIN)
             {
                 return "El Administrador Absoluto no puede ser degradado de rango.";
             }
 
+            // Validaciones básicas de campos vacíos o muy cortos
             if (usuario == null)
                 return "Error: usuario vacío";
 
@@ -66,13 +73,12 @@ namespace BLL
             if (usuario.ClaveAcceso.Length < 5)
                 return "La contraseña debe tener al menos 5 caracteres";
 
-            // Validar formato de usuario 
             if (usuario.Username.Length < 4)
                 return "El usuario debe tener al menos 4 caracteres";
 
+            // Validación de formato de correo (que tenga @ y punto)
             if (!string.IsNullOrWhiteSpace(usuario.Correo))
             {
-                // Explicación: Verifica que tenga formato texto@texto.dominio
                 string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
                 if (!Regex.IsMatch(usuario.Correo, patron))
                 {
@@ -89,20 +95,20 @@ namespace BLL
                 return "El número de teléfono debe estar completo (Formato: 0000-0000)";
             }
 
-            // Validar duplicados
+            // Verifica que el nombre de usuario o el correo no estén ya usados por otra persona
             var lista = dal.ObtenerUsuarios();
             if (lista.Any(u => u.Username.ToLower() == usuario.Username.ToLower()))
                 return "Ya existe un usuario con ese nombre";
 
-            if(lista.Any(u => u.Correo.ToLower() == usuario.Correo.ToLower()))
+            if (lista.Any(u => u.Correo.ToLower() == usuario.Correo.ToLower()))
                 return "Ya existe un registro con este correo electrónico.";
 
+            // Si todo está bien, lo manda a guardar
             dal.Guardar(usuario);
-
             return "OK";
         }
 
-        // Actualizar
+        // Modifica los datos de un usuario existente aplicando validaciones similares
         public string ActualizarUsuario(Usuario usuario)
         {
             if (usuario == null)
@@ -117,7 +123,6 @@ namespace BLL
             if (string.IsNullOrWhiteSpace(usuario.ClaveAcceso))
                 return "La contraseña es obligatoria";
 
-            // Validar formato de usuario 
             if (usuario.Username.Length < 4)
                 return "El usuario debe tener al menos 4 caracteres";
 
@@ -128,6 +133,7 @@ namespace BLL
 
             var lista = dal.ObtenerUsuarios();
 
+            // Verifica duplicados pero ignora al mismo usuario que estamos editando
             if (lista.Any(u => u.Username.ToLower() == usuario.Username.ToLower() && u.IdUsuario != usuario.IdUsuario))
                 return "Ya existe ese usuario.";
 
@@ -137,11 +143,10 @@ namespace BLL
             }
 
             dal.Guardar(usuario);
-
             return "OK";
         }
 
-        // Eliminar
+        // Quita a un usuario del sistema, pero protege al SuperAdmin (ID 1) para que nunca sea borrado
         public string EliminarUsuario(int id)
         {
             if (id == 1)
@@ -153,11 +158,10 @@ namespace BLL
                 return "ID inválido";
 
             dal.Eliminar(id);
-
             return "OK";
         }
 
-        //Consultar
+        // Obtiene la lista completa de usuarios desde la base de datos
         public List<Usuario> ObtenerUsuarios()
         {
             return dal.ObtenerUsuarios();

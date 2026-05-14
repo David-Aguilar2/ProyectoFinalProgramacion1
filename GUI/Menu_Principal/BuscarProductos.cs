@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 namespace GUI.Menu_Principal
 {
+    // Este es el formulario principal (Dashboard) que ve el usuario al entrar
     public partial class BuscarProductos : Form
     {
         ProductoBLL productoBLL = new ProductoBLL();
@@ -24,14 +25,16 @@ namespace GUI.Menu_Principal
             InitializeComponent();
         }
 
+        // Configura las opciones básicas de la tabla de productos
         private void ConfigurarGrid()
         {
             dgvProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProductos.AllowUserToAddRows = false;
             dgvProductos.ReadOnly = true;
-            CargarDatos("");
+            CargarDatos(""); // Carga la lista inicialmente vacía (todos los productos)
         }
 
+        // Busca productos activos y permite filtrar por nombre/descripción o por stock bajo
         private void CargarDatos(string filtro)
         {
             var productos = productoBLL.ObtenerProductos();
@@ -39,15 +42,18 @@ namespace GUI.Menu_Principal
 
             bool filtrarStockBajo = checkStockBajo.Checked;
 
+            // Filtramos solo productos activos (Estado == true)
             var listaFiltrada = productos
                 .Where(p => p.Estado == true &&
                            (p.Nombre.ToLower().Contains(filtro.ToLower()) ||
                             p.Descripcion.ToLower().Contains(filtro.ToLower())))
+                // Si el checkbox de stock bajo está marcado, solo muestra los que tienen menos de 5 unidades
                 .Where(p => !filtrarStockBajo || p.Cantidad < 5)
                 .Select(p => new
                 {
                     p.IdProducto,
                     p.Nombre,
+                    // Buscamos el nombre de la categoría o ponemos N/A si no existe
                     Categoria = categorias.FirstOrDefault(c => c.IdCategoria == p.IdCategoria)?.Nombre ?? "N/A",
                     p.Cantidad,
                     p.Precio
@@ -56,6 +62,7 @@ namespace GUI.Menu_Principal
             dgvProductos.DataSource = listaFiltrada;
         }
 
+        // Actualiza los contadores visuales (tarjetas de información) del menú
         private void ActualizarDashboard()
         {
             var productos = productoBLL.ObtenerProductos();
@@ -67,13 +74,14 @@ namespace GUI.Menu_Principal
             lblStockBajo.Text = $"{stockBajo}";
         }
 
-
+        // Método genérico para abrir otros formularios ocultando el menú principal
         private void AbrirFormularioUnico<T>() where T : Form, new()
         {
             Form formularioExistente = Application.OpenForms.OfType<T>().FirstOrDefault();
             if (formularioExistente != null) formularioExistente.Close();
 
             T nuevoFormulario = new T();
+            // Al cerrar el formulario abierto, volvemos a mostrar el menú y refrescamos los datos
             nuevoFormulario.FormClosed += (s, args) => {
                 this.Show();
                 ActualizarDashboard();
@@ -90,7 +98,7 @@ namespace GUI.Menu_Principal
             {
                 ConfigurarGrid();
                 ActualizarDashboard();
-                AplicarPermisos();
+                AplicarPermisos(); // Ajusta qué botones puede ver el usuario según su rol
             }
             catch (Exception ex)
             {
@@ -98,48 +106,48 @@ namespace GUI.Menu_Principal
             }
         }
 
+        // REGLAS DE SEGURIDAD: Oculta o muestra botones según el Rol del usuario
         private void AplicarPermisos()
         {
             var userLogueado = Login.UsuarioAutenticado;
 
             if (userLogueado != null)
             {
+                // El trabajador no puede gestionar usuarios
                 if (userLogueado.Rol == Usuario.ROL_TRABAJADOR)
                 {
                     btnUsuarios.Visible = false;
-
                 }
 
-                if (userLogueado.Rol == Usuario.ROL_ADMIN)
+                // El administrador y superadmin pueden ver almacén y usuarios
+                if (userLogueado.Rol == Usuario.ROL_ADMIN || userLogueado.Rol == Usuario.ROL_SUPERADMIN)
                 {
                     btnUsuarios.Visible = true;
                     btnAlmacen.Visible = true;
                 }
-
             }
         }
 
+        // Navegación a otros módulos
         private void btnUsuarios_Click(object sender, EventArgs e) => AbrirFormularioUnico<ListaUsuario>();
         private void btnAlmacen_Click(object sender, EventArgs e) => AbrirFormularioUnico<ListaAlmacen>();
+        private void btnVenta_Click(object sender, EventArgs e) => AbrirFormularioUnico<ListaRegistroSalida>();
 
+        // Filtro de búsqueda en tiempo real
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             CargarDatos(txtBuscar.Text);
         }
 
+        // Permite seleccionar un producto de la tabla y abrir directamente el registro de movimiento
         private void btnNuevaVenta_Click(object sender, EventArgs e)
         {
             if (dgvProductos.SelectedRows.Count > 0)
             {
-                int idProducto = Convert.ToInt32(dgvProductos.SelectedRows[0].Cells["IdProducto"].Value);
-
-                var productoSeleccionado = productoBLL.ObtenerProductoPorId(idProducto);
-
+                // Abrimos el formulario de movimientos (entradas/salidas)
                 FrmRegistroSalida frm = new FrmRegistroSalida();
-
                 frm.ShowDialog();
-
-                CargarDatos("");
+                CargarDatos(""); // Refrescamos al volver
             }
             else
             {
@@ -148,31 +156,29 @@ namespace GUI.Menu_Principal
             }
         }
 
+        // Cierra la sesión del usuario actual y vuelve al formulario de Login
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("¿Está seguro que desea cerrar sesión?",
-        "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
-                GUI.Autenticacion.Login.UsuarioAutenticado = null;
-
-                this.DialogResult = DialogResult.OK;
+                GUI.Autenticacion.Login.UsuarioAutenticado = null; // Limpiamos la credencial
+                this.DialogResult = DialogResult.OK; // Marcamos salida exitosa
                 this.Close();
             }
         }
 
-        private void btnVenta_Click(object sender, EventArgs e) => AbrirFormularioUnico<ListaRegistroSalida>();
-
+        // Filtra automáticamente cuando se marca/desmarca la opción de stock bajo
         private void checkStockBajo_CheckedChanged(object sender, EventArgs e)
         {
             CargarDatos(txtBuscar.Text);
         }
 
-        // Evento de cierre del programa completo con confirmación
+        // Al intentar cerrar la ventana con la "X", pide confirmación para salir de toda la app
         private void BuscarProductos_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Cuadro de diálogo de confirmación
             DialogResult resultado = MessageBox.Show(
                 "¿Estás seguro de querer salir? Se cerrará la sesión actual",
                 "Confirmar Salida",
@@ -180,14 +186,13 @@ namespace GUI.Menu_Principal
                 MessageBoxIcon.Question
             );
 
-            // Si el usuario presiona "No", cancelamos el cierre
             if (resultado == DialogResult.No)
             {
-                e.Cancel = true; // Esto detiene el cierre del formulario
+                e.Cancel = true; // Detiene el cierre
             }
             else
             {
-                // Si dice que "Sí", cerramos toda la aplicación por completo
+                // Cierra la aplicación por completo (mata todos los procesos)
                 Application.ExitThread();
             }
         }

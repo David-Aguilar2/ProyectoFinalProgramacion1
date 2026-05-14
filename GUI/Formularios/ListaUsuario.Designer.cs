@@ -64,7 +64,7 @@
             this.RMPrincipal.ForeColor = System.Drawing.Color.White;
             this.RMPrincipal.Location = new System.Drawing.Point(28, 21);
             this.RMPrincipal.Name = "RMPrincipal";
-            this.RMPrincipal.Size = new System.Drawing.Size(129, 55);
+            this.RMPrincipal.Size = new System.Drawing.Size(152, 55);
             this.RMPrincipal.TabIndex = 20;
             this.RMPrincipal.Text = "Regresar Menú Principal";
             this.RMPrincipal.UseVisualStyleBackColor = false;
@@ -81,7 +81,6 @@
             this.label1.Size = new System.Drawing.Size(318, 42);
             this.label1.TabIndex = 21;
             this.label1.Text = "Lista de usuarios";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // agregar
             // 

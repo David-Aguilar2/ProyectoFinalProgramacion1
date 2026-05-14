@@ -376,3 +376,395 @@ db.SaveChanges();
 - La auditoría se ejecuta antes de aplicar los cambios finales.
 
 ---
+
+## Capa GUI (Interfaz)
+
+### Flujo de inicio de la aplicación
+
+El arranque está definido en `GUI\Program.cs`:
+
+```csharp
+static void Main()
+{
+    Application.EnableVisualStyles();
+    Application.SetCompatibleTextRenderingDefault(false);
+
+    while (true)
+    {
+        using (var login = new Login())
+        {
+            if (login.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+        }
+
+        BuscarProductos menu = new BuscarProductos();
+        Application.Run(menu);
+
+        if (menu.DialogResult != DialogResult.OK)
+        {
+            break;
+        }
+    }
+}
+```
+
+- Se muestra primero el formulario de `Login`.
+- Si el login es exitoso, se ejecuta `BuscarProductos` como formulario principal.
+- Al cerrar sesión, el mismo ciclo permite volver a `Login`.
+
+### Login
+
+`GUI.Autenticacion.Login` gestiona credenciales y establece el usuario autenticado con una propiedad global estática:
+
+```csharp
+string passHasheada = UsuarioBLL.EncriptarClave(pass);
+var usuarioLogueado = usuarioBLL.Login(user, passHasheada);
+```
+
+- Valida que usuario y contraseña no estén vacíos.
+- Hashea la contraseña con `UsuarioBLL.EncriptarClave` antes de comparar.
+- Rechaza usuarios inactivos (`usuarioLogueado.Estado == false`).
+- Tras el éxito, asigna `Login.UsuarioAutenticado` y cierra el formulario.
+
+### BuscarProductos (Menú principal)
+
+Este formulario es el hub principal de la aplicación. Sus responsabilidades son:
+
+- mostrar productos con filtros de búsqueda y stock bajo,
+- actualizar indicadores de inventario,
+- abrir formularios secundarios,
+- controlar permisos según el rol del usuario logueado,
+- confirmar la salida de la aplicación.
+
+#### Permisos basados en rol
+
+```csharp
+if (userLogueado.Rol == Usuario.ROL_TRABAJADOR)
+{
+    btnUsuarios.Visible = false;
+}
+
+if (userLogueado.Rol == Usuario.ROL_ADMIN)
+{
+    btnUsuarios.Visible = true;
+    btnAlmacen.Visible = true;
+}
+```
+
+- Un trabajador no puede acceder a la gestión de usuarios.
+- Un administrador puede ver los botones de usuarios y almacén.
+
+#### Carga de datos y filtros
+
+```csharp
+var listaFiltrada = productos
+    .Where(p => p.Estado == true &&
+               (p.Nombre.ToLower().Contains(filtro.ToLower()) ||
+                p.Descripcion.ToLower().Contains(filtro.ToLower())))
+    .Where(p => !filtrarStockBajo || p.Cantidad < 5)
+    .Select(p => new
+    {
+        p.IdProducto,
+        p.Nombre,
+        Categoria = categorias.FirstOrDefault(c => c.IdCategoria == p.IdCategoria)?.Nombre ?? "N/A",
+        p.Cantidad,
+        p.Precio
+    }).ToList();
+```
+
+- Filtra por nombre o descripción.
+- Permite activar un filtro de stock bajo.
+- Resuelve la categoría por su relación con `IdCategoria`.
+
+#### Control único de formulario hijo
+
+```csharp
+private void AbrirFormularioUnico<T>() where T : Form, new()
+{
+    Form formularioExistente = Application.OpenForms.OfType<T>().FirstOrDefault();
+    if (formularioExistente != null) formularioExistente.Close();
+
+    T nuevoFormulario = new T();
+    nuevoFormulario.FormClosed += (s, args) => {
+        this.Show();
+        ActualizarDashboard();
+        CargarDatos("");
+    };
+
+    this.Hide();
+    nuevoFormulario.Show();
+}
+```
+
+- Evita múltiples instancias del mismo formulario.
+- Vuelve a mostrar el menú principal y refresca los datos cuando se cierra el hijo.
+
+#### Confirmación de cierre global
+
+El menú principal muestra un cuadro de diálogo al cerrar, lo cual impide cierres accidentales.
+
+```csharp
+private void BuscarProductos_FormClosing(object sender, FormClosingEventArgs e)
+{
+    DialogResult resultado = MessageBox.Show(
+        "¿Estás seguro de querer salir? Se cerrará la sesión actual",
+        "Confirmar Salida",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question
+    );
+
+    if (resultado == DialogResult.No)
+    {
+        e.Cancel = true;
+    }
+    else
+    {
+        Application.ExitThread();
+    }
+}
+```
+
+### ListaUsuario
+
+`GUI.Formularios.ListaUsuario` expone un grid con todas las cuentas existentes y provee botones de edición y eliminación.
+
+- Configura dinámicamente columnas de datos y botones.
+- Permite búsqueda por ID.
+- Abre `FrmUsuarios` en modo edición o creación.
+- Confirma eliminación con un `MessageBox`.
+- Tiene la misma lógica de cierre global.
+
+Fragmento clave:
+
+```csharp
+private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+{
+    if (e.RowIndex < 0) return;
+    int idUsuario = Convert.ToInt32(dgvUsuarios.Rows[e.RowIndex].Cells["Id"].Value);
+    if (dgvUsuarios.Columns[e.ColumnIndex].Name == "Editar")
+    {
+        Usuario usuario = usuarioBLL.ObtenerUsuarioPorId(idUsuario);
+        FrmUsuarios frmUsuarios = new FrmUsuarios(usuario);
+        frmUsuarios.FormClosed += (s, args) => CargarDatos(txtBuscarId.Text);
+        frmUsuarios.ShowDialog();
+    }
+    else if (dgvUsuarios.Columns[e.ColumnIndex].Name == "Eliminar")
+    {
+        var confirmResult = MessageBox.Show("¿Está seguro de eliminar este usuario?", "Confirmar eliminación", MessageBoxButtons.YesNo);
+        if (confirmResult == DialogResult.Yes)
+        {
+            usuarioBLL.EliminarUsuario(idUsuario);
+            CargarDatos(txtBuscarId.Text);
+        }
+    }
+}
+```
+
+### FrmUsuarios
+
+Este formulario maneja creación y edición de usuarios.
+
+- Si recibe un `Usuario`, carga sus datos en los controles.
+- Si no recibe usuario, opera en modo creación.
+- Si el usuario es absoluto (`IdUsuario == 1`), bloquea la edición del rol.
+- En actualización solo rehasea la contraseña si ha cambiado.
+
+Código relevante de guardado:
+
+```csharp
+if (_usuarioEdicion != null)
+{
+    u.IdUsuario = _usuarioEdicion.IdUsuario;
+    if (u.IdUsuario == 1) u.Rol = Usuario.ROL_SUPERADMIN;
+    if (txtClaveAcceso.Text != _usuarioEdicion.ClaveAcceso)
+    {
+        u.ClaveAcceso = UsuarioBLL.EncriptarClave(txtClaveAcceso.Text);
+    }
+    else
+    {
+        u.ClaveAcceso = _usuarioEdicion.ClaveAcceso;
+    }
+    resultado = usuarioBLL.ActualizarUsuario(u);
+}
+else
+{
+    u.ClaveAcceso = UsuarioBLL.EncriptarClave(txtClaveAcceso.Text);
+    resultado = usuarioBLL.InsertarUsuario(u);
+}
+```
+
+- La separación entre creación y edición garantiza que no se reemplace la contraseña con valor vacío.
+- El formulario delega en `UsuarioBLL` todas las reglas de negocio.
+
+### ListaCategoria
+
+`GUI.Formularios.ListaCategoria` es un listado similar a `ListaUsuario` con búsqueda por ID, edición y eliminación.
+
+- Carga categorías en un grid.
+- Usa botones de acción generados dinámicamente.
+- Al editar abre `FrmCategoria`.
+- Al eliminar confirma la acción y actualiza el grid.
+- También implementa cierre global con confirmación.
+
+### FrmCategoria
+
+Formulario de alta y edición de categorías.
+
+- Si existe `_categoriaEdicion`, carga campos para actualización.
+- En creación inicializa el formulario en modo nuevo.
+- Valida que el nombre no esté vacío.
+
+Fragmento de guardado:
+
+```csharp
+Categoria c = new Categoria
+{
+    Nombre = txtNombre.Text,
+    Descripcion = Descripcion.Text
+};
+
+if (_categoriaEdicion != null)
+{
+    c.IdCategoria = _categoriaEdicion.IdCategoria;
+    resultado = categoriaBLL.ActualizarCategoria(c);
+}
+else
+{
+    resultado = categoriaBLL.InsertarCategoria(c);
+}
+```
+
+### ListaAlmacen
+
+`GUI.Formularios.ListaAlmacen` presenta el inventario de productos y aplica permisos de edición:
+
+- Los `Trabajadores` no pueden ver botones de agregar, editar ni eliminar.
+- Los `Administradores` sí pueden administrar productos.
+- Muestra nombre de categoría y estado del producto.
+- Permite filtrar por ID de producto.
+
+#### Control de permisos
+
+```csharp
+if (userLogueado.Rol != Usuario.ROL_TRABAJADOR)
+{
+    DataGridViewButtonColumn btnEditar = new DataGridViewButtonColumn();
+    // ...
+    dgvAlmacen.Columns.Add(btnEditar);
+    dgvAlmacen.Columns.Add(btnEliminar);
+}
+
+if (userLogueado.Rol == Usuario.ROL_TRABAJADOR)
+{
+    agregar.Visible = false;
+    gCategorias.Visible = false;
+}
+```
+
+### FrmAlmacen
+
+Formulario de alta y edición de productos.
+
+- Carga categorías en un combo con opción por defecto.
+- Carga estado (`Activo`/`Inactivo`) y datos de producto en modo edición.
+- Si se actualiza, pasa `idUsuarioActual` para auditar cambios de stock.
+
+Fragmento clave:
+
+```csharp
+if (_productoEdicion != null)
+{
+    p.IdProducto = _productoEdicion.IdProducto;
+    p.FechaRegistro = _productoEdicion.FechaRegistro;
+    resultado = productoBLL.ActualizarProducto(p, idUsuarioActual);
+}
+else
+{
+    resultado = productoBLL.InsertarProducto(p);
+}
+```
+
+- El formulario no implementa lógica de negocio compleja; delega en `ProductoBLL`.
+- Esto mantiene la interfaz desacoplada del control de stock y auditoría.
+
+### FrmRegistroSalida
+
+Este formulario gestiona movimientos de inventario:
+
+- Carga productos y usuarios en combo boxes.
+- Selecciona al usuario autenticado por defecto y no permite cambiarlo.
+- Presenta opciones `ENTRADA` y `SALIDA`.
+- Valida producto seleccionado, cantidad > 0 y motivo.
+
+Fragmento de validación y registro:
+
+```csharp
+RegistroSalida movimiento = new RegistroSalida
+{
+    IdProducto = Convert.ToInt32(cmbProducto.SelectedValue),
+    IdUsuario = Login.UsuarioAutenticado.IdUsuario,
+    Tipo = cmbTipo.Text,
+    Cantidad = (int)txtCantidad.Value,
+    Motivo = txtMotivo.Text,
+    FechaSalida = DateTime.Now
+};
+
+string resultado = registroBLL.InsertarMovimiento(movimiento);
+```
+
+- Si el registro es exitoso, muestra mensaje de confirmación.
+- En caso de error, muestra el mensaje devuelto por la BLL.
+
+### ListaRegistroSalida
+
+`GUI.Formularios.ListaRegistroSalida` muestra el historial de movimientos con filtros de fecha.
+
+- Usa `registroBLL.ObtenerRegistrosSalida()`.
+- Muestra columnas de fecha, producto, tipo, cantidad, motivo y usuario.
+- Filtra entre `dtpDesde` y `dtpHasta`.
+- Ordena el resultado de forma descendente por fecha.
+
+Fragmento de carga:
+
+```csharp
+var listaFiltrada = movimientos
+    .Where(m => m.FechaSalida.Date >= fechaDesde &&
+                m.FechaSalida.Date <= fechaHasta)
+    .OrderByDescending(m => m.FechaSalida)
+    .ToList();
+```
+
+- Al usar `Include` en DAL, los valores de `m.Producto?.Nombre` y `m.Usuario?.Nombre` están disponibles sin consultas adicionales.
+
+### Comportamiento de cierre común
+
+Varias formas de lista (`ListaUsuario`, `ListaCategoria`, `ListaAlmacen`, `ListaRegistroSalida`) implementan un patrón de confirmación idéntico:
+
+- se pregunta al usuario si desea salir,
+- se cancela el cierre con `e.Cancel = true` si la respuesta es `No`,
+- se cierra la aplicación con `Application.ExitThread()` si la respuesta es `Sí`.
+
+---
+
+## Guía de Instalación
+
+Para aplicar las migraciones de Entity Framework en este proyecto, use la Consola de Administrador de Paquetes de Visual Studio con los siguientes comandos:
+
+```powershell
+Add-Migration NombreDeLaMigracion
+Update-Database
+```
+
+Ejemplo:
+
+```powershell
+Add-Migration AgregarIndiceUnicoCorreo
+Update-Database
+```
+
+- `Add-Migration`: crea una nueva migración basada en los cambios del modelo.
+- `Update-Database`: aplica los cambios al esquema de la base de datos.
+
+> Nota: el proyecto ya deshabilita el inicializador automático con `Database.SetInitializer<IconicFashionDbContext>(null);`, por lo que las migraciones deben aplicarse manualmente.
