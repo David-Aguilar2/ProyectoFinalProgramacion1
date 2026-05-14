@@ -20,6 +20,8 @@ namespace GUI.Menu_Principal
         ProductoBLL productoBLL = new ProductoBLL();
         CategoriaBLL categoriaBLL = new CategoriaBLL();
 
+        private bool regresandoAlMenu = false;
+
         public BuscarProductos()
         {
             InitializeComponent();
@@ -159,6 +161,8 @@ namespace GUI.Menu_Principal
         // Cierra la sesión del usuario actual y vuelve al formulario de Login
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
+            regresandoAlMenu = true;
+
             DialogResult result = MessageBox.Show("¿Está seguro que desea cerrar sesión?",
                                 "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -179,21 +183,24 @@ namespace GUI.Menu_Principal
         // Al intentar cerrar la ventana con la "X", pide confirmación para salir de toda la app
         private void BuscarProductos_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult resultado = MessageBox.Show(
-                "¿Estás seguro de querer salir? Se cerrará la sesión actual",
-                "Confirmar Salida",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
-            );
+            if (!regresandoAlMenu)
+            {
+                DialogResult resultado = MessageBox.Show(
+                    "¿Estás seguro de querer salir? Se cerrará la sesión actual",
+                    "Confirmar Salida",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
 
-            if (resultado == DialogResult.No)
-            {
-                e.Cancel = true; // Detiene el cierre
-            }
-            else
-            {
-                // Cierra la aplicación por completo (mata todos los procesos)
-                Application.ExitThread();
+                if (resultado == DialogResult.No)
+                {
+                    e.Cancel = true; // No cierra la ventana
+                }
+                else
+                {
+                    // Cierra toda la aplicación
+                    Application.ExitThread();
+                }
             }
         }
     }
