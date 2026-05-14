@@ -260,3 +260,119 @@ public List<RegistroSalida> ObtenerRegistrosSalida()
 - Evita `LazyLoading` y múltiples consultas posteriores cuando la UI necesita mostrar datos de las entidades relacionadas.
 
 ---
+
+## Capa BLL (Lógica de Negocio)
+
+### Validaciones de seguridad en `UsuarioBLL`
+
+`UsuarioBLL` implementa validaciones robustas antes de delegar operaciones a DAL.
+
+#### Hashing SHA256
+
+```csharp
+public static string EncriptarClave(string clave)
+{
+    using (SHA256 sha256Hash = SHA256.Create())
+    {
+        byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(clave));
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            builder.Append(bytes[i].ToString("x2"));
+        }
+        return builder.ToString();
+    }
+}
+```
+
+- Se usa SHA256 para hashear la contraseña antes de compararla con el valor almacenado.
+- Esto evita el almacenamiento de contraseñas en texto plano.
+
+#### Validación con Regex
+
+```csharp
+if (!string.IsNullOrWhiteSpace(usuario.Correo))
+{
+    string patron = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+    if (!Regex.IsMatch(usuario.Correo, patron))
+    {
+        return "El formato del correo electrónico no es válido";
+    }
+}
+```
+
+- El patrón asegura un formato básico `nombre@dominio.ext`.
+- También se valida la existencia del correo antes de insertar o actualizar.
+
+#### Otras validaciones de `UsuarioBLL`
+
+- `Username` obligatorio y mínimo 4 caracteres.
+- `ClaveAcceso` obligatorio y mínimo 5 caracteres.
+- `Telefono` obligatorio con longitud mínima para formato `0000-0000`.
+- Exclusión de duplicados por `Username` y `Correo`.
+- Restricción adicional para el usuario con `IdUsuario == 1`: no puede ser degradado ni eliminado.
+
+### Lógica transaccional de `RegistroSalidaBLL`
+
+`RegistroSalidaBLL.InsertarMovimiento` actualiza stock y registra el movimiento en la misma unidad de trabajo:
+
+```csharp
+using (var db = new IconicFashionDbContext())
+{
+    var productoBD = db.Productos.Find(registro.IdProducto);
+
+    if (registro.Tipo == "SALIDA")
+    {
+        if (productoBD.Cantidad < registro.Cantidad)
+            return $"Stock insuficiente. Solo hay {productoBD.Cantidad} unidades.";
+
+        productoBD.Cantidad -= registro.Cantidad;
+    }
+    else
+    {
+        productoBD.Cantidad += registro.Cantidad;
+    }
+
+    db.RegistrosSalida.Add(registro);
+    db.SaveChanges();
+}
+```
+
+- Se consulta el producto existente en la misma instancia de contexto.
+- Si el movimiento es `SALIDA`, valida que la cantidad disponible sea suficiente.
+- Si el movimiento es `ENTRADA`, incrementa el stock.
+- `db.SaveChanges()` persiste ambas modificaciones en un solo commit.
+- Esto garantiza consistencia entre el inventario y el historial de movimientos.
+
+### Auditoría automática en `ActualizarProducto`
+
+`ProductoBLL.ActualizarProducto` registra un movimiento automático cuando cambia la cantidad de un producto:
+
+```csharp
+var productoOriginal = db.Productos.Find(productoEditado.IdProducto);
+if (productoOriginal.Cantidad != productoEditado.Cantidad)
+{
+    int diferencia = productoEditado.Cantidad - productoOriginal.Cantidad;
+
+    RegistroSalida movimientoAuto = new RegistroSalida
+    {
+        IdProducto = productoEditado.IdProducto,
+        IdUsuario = idUsuario,
+        FechaSalida = DateTime.Now,
+        Motivo = "Stock actualizado por administrador",
+        Tipo = diferencia > 0 ? "ENTRADA" : "SALIDA",
+        Cantidad = Math.Abs(diferencia)
+    };
+
+    db.RegistrosSalida.Add(movimientoAuto);
+}
+
+db.Entry(productoOriginal).CurrentValues.SetValues(productoEditado);
+db.SaveChanges();
+```
+
+- Si la cantidad cambia, se crea automáticamente un registro de salida/entrada.
+- Esto proporciona trazabilidad de modificaciones manuales de stock.
+- La auditoría se ejecuta antes de aplicar los cambios finales.
+
+---
