@@ -151,5 +151,27 @@ namespace GUI
             AbrirFormularioUnico<ListaCategoria>();
         }
 
+        // Evento de cierre del programa completo con confirmación
+        private void ListaAlmacen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Cuadro de diálogo de confirmación
+            DialogResult resultado = MessageBox.Show(
+                "¿Estás seguro de querer salir? Se cerrará la sesión actual",
+                "Confirmar Salida",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            // Si el usuario presiona "No", cancelamos el cierre
+            if (resultado == DialogResult.No)
+            {
+                e.Cancel = true; // Esto detiene el cierre del formulario
+            }
+            else
+            {
+                // Si dice que "Sí", cerramos toda la aplicación por completo
+                Application.ExitThread();
+            }
+        }
     }
 }

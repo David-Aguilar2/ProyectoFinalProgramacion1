@@ -131,6 +131,7 @@
             this.Name = "ListaCategoria";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | Gestión Categorias";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ListaCategoria_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategorias)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

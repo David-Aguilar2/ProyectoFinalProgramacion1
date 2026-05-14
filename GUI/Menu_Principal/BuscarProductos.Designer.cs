@@ -266,6 +266,7 @@
             this.Name = "BuscarProductos";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | Menú";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BuscarProductos_FormClosing);
             this.Load += new System.EventHandler(this.BuscarProductos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();

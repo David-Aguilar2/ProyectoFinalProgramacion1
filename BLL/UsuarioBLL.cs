@@ -63,6 +63,9 @@ namespace BLL
             if (string.IsNullOrWhiteSpace(usuario.ClaveAcceso))
                 return "La contraseña es obligatoria";
 
+            if (usuario.ClaveAcceso.Length < 5)
+                return "La contraseña debe tener al menos 5 caracteres";
+
             // Validar formato de usuario 
             if (usuario.Username.Length < 4)
                 return "El usuario debe tener al menos 4 caracteres";
@@ -91,6 +94,9 @@ namespace BLL
             if (lista.Any(u => u.Username.ToLower() == usuario.Username.ToLower()))
                 return "Ya existe un usuario con ese nombre";
 
+            if(lista.Any(u => u.Correo.ToLower() == usuario.Correo.ToLower()))
+                return "Ya existe un registro con este correo electrónico.";
+
             dal.Guardar(usuario);
 
             return "OK";
@@ -111,12 +117,23 @@ namespace BLL
             if (string.IsNullOrWhiteSpace(usuario.ClaveAcceso))
                 return "La contraseña es obligatoria";
 
-            if (usuario.IdUsuario <= 0)
-                return "Usuario inválido";
+            // Validar formato de usuario 
+            if (usuario.Username.Length < 4)
+                return "El usuario debe tener al menos 4 caracteres";
 
             if (string.IsNullOrWhiteSpace(usuario.Telefono) || usuario.Telefono.Length < 9)
             {
                 return "El número de teléfono debe estar completo (Formato: 0000-0000)";
+            }
+
+            var lista = dal.ObtenerUsuarios();
+
+            if (lista.Any(u => u.Username.ToLower() == usuario.Username.ToLower() && u.IdUsuario != usuario.IdUsuario))
+                return "Ya existe ese usuario.";
+
+            if (lista.Any(u => u.Correo.ToLower() == usuario.Correo.ToLower() && u.IdUsuario != usuario.IdUsuario))
+            {
+                return "No se puede actualizar: El correo electrónico ya pertenece a otro usuario.";
             }
 
             dal.Guardar(usuario);

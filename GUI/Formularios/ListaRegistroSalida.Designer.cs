@@ -152,6 +152,7 @@
             this.Name = "ListaRegistroSalida";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ListaRegistroVentas";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ListaRegistroSalida_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistroSalida)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

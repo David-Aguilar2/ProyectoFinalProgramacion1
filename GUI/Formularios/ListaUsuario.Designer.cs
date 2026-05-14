@@ -135,6 +135,7 @@
             this.Name = "ListaUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | Gestión de Usuarios";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ListaUsuario_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

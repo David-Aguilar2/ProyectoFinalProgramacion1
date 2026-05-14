@@ -19,6 +19,7 @@ namespace EL
 
         [StringLength(120)]
         [EmailAddress]
+        [Index(IsUnique = true)]
         public string Correo { get; set; }
 
         [Required, StringLength(50)]

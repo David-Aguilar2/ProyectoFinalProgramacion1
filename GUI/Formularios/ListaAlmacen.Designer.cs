@@ -153,6 +153,7 @@
             this.Name = "ListaAlmacen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IconicFashion | Gestión del Almacen";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ListaAlmacen_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAlmacen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
